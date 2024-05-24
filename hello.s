@@ -4,7 +4,7 @@
 .globl _start
 
 _start:
-; write(1, "hello, world!!!\n", 16)
+// write(1, "hello, world!!!\n", 16)
     xor rax, rax
     xor rdi, rdi
     xor rdx, rdx
@@ -22,7 +22,7 @@ _start:
     pop rdx
     syscall
 
-; exit(1)
+// exit(1)
     push 0x3c
     pop rax
     syscall
