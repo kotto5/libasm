@@ -1,5 +1,2 @@
-*
-!*.asm
-!*.s
-!.gitignore
-!Makefile
+*.o
+a.out
