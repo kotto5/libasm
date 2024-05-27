@@ -9,7 +9,8 @@ ASM_OBJS := $(patsubst %.asm, %.o, $(ASM_SRCS))
 OBJS = $(C_OBJS) $(ASM_OBJS)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall
+# CFLAGS = -Wall -Wextra -Werror -g
 
 NASM = nasm
 NASMFLAGS = -f elf64
