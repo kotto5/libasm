@@ -1,5 +1,5 @@
 section .text
-global test
+global ft_strlen
 
 ; size_t ft_strlen(char *)
 ft_strlen:
@@ -18,12 +18,10 @@ ft_strlen:
 
     jmp .loop
 
-.done
+.done:
     mov rax, rcx
     ret
 
 .return_zero:
-    cor rax, rax
+    xor rax, rax
     ret
-
-
