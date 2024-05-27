@@ -4,16 +4,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
-// extern size_t test(size_t a);
-
-// int main() {
-//     size_t result = test(30000000000000);
-//     printf("Result: %ld\n\n", result);
-//     return 0;
-// }
-
 extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
+extern int ft_strcmp(const char *s1, const char *s2);
 
 void _test_ft_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
@@ -70,8 +63,19 @@ void test_ft_strcpy() {
     // printf("org: %s\n", s);
 }
 
+void    _test_strcmp(const char *s1, const char *s2) {
+    printf("og: %d\n", strcmp(s1, s2));
+    printf("me: %d\n", ft_strcmp(s1, s2));
+    // assert(ft_strcmp(s1, s2) == strcmp(s1, s2));
+}
+
+void    test_strcmp() {
+    _test_strcmp("aa", "ab");
+}
+
 int main() {
     // test_ft_strlen();
-    test_ft_strcpy();
+    // test_ft_strcpy();
+    test_strcmp();
     return 0;
 }
