@@ -15,5 +15,7 @@ extern size_t ft_strlen(char *s);
 int main() {
     char *s = "42Tokyo";
 
-    assert(ft_strlen(s), strlen(s));
+    // assert(ft_strlen(s), strlen(s));
+    printf("%ld\n", ft_strlen(s));
+    printf("%ld\n", strlen(s));
 }
