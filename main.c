@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-extern int test(int a);
+extern size_t test(size_t a);
 
 int main() {
-    int result = test(5);
-    printf("Result: %d\n", result);
+    size_t result = test(30000000000000);
+    printf("Result: %ld\n", result);
     return 0;
 }
