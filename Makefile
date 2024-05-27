@@ -32,5 +32,9 @@ $(TARGET): $(OBJS)
 %.o: %.asm
 	$(NASM) $(NASMFLAGS) $<
 
+debug: $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) -fsanitize=address $^
+	
+
 clean:
 	rm -f $(TARGET) $(OBJS)

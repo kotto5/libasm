@@ -3,8 +3,8 @@ global ft_strlen
 
 ; size_t ft_strlen(char *)
 ft_strlen:
-    test rdi, rdi
-    jz .return_zero
+;    test rdi, rdi   ; strlen() dosen't handle NULL pointer.
+;    jz .return_zero 
 
     xor rcx, rcx
 
