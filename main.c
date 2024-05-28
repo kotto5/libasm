@@ -8,28 +8,22 @@ extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
 
-void _test_ft_strlen(char *s) {
+void t_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
 }
 
-void test_ft_strlen(void) {
-    _test_ft_strlen("a");
-    _test_ft_strlen("a\0a");
-
-    _test_ft_strlen("");
-    ft_strlen("");
-    printf("%ld\n", ft_strlen(""));
-    printf("%ld\n", strlen(""));
+void test_strlen(void) {
+    t_strlen("");
+    t_strlen("abc");
+    t_strlen("a\0a");
 
     // error cases
-    // test_ft_strlen(NULL); // segmentation fault
-    // strlen(NULL);
-    // ft_strlen(NULL);
+    // t_strlen(NULL); // segmentation fault
 }
 
-void _test_ft_strcpy(char *dst, char *src, size_t dst_size) {
-    char *dst1 = malloc(dst_size);
-    char *dst2 = malloc(dst_size);
+void t_strcpy(char *dst, char *src, size_t dst_size) {
+    char *dst1 = calloc(1, dst_size);
+    char *dst2 = calloc(1, dst_size);
 
     strcpy(dst1, dst);
     strcpy(dst2, dst);
@@ -43,7 +37,7 @@ void _test_ft_strcpy(char *dst, char *src, size_t dst_size) {
     printf("tst: %s\n", dst1);
     printf("org: %s\n", dst2);
 
-    // assert(strcmp(dst1, dst2) == 0);
+    assert(strcmp(dst1, dst2) == 0);
 
     free(dst1);
     free(dst2);
@@ -51,13 +45,13 @@ void _test_ft_strcpy(char *dst, char *src, size_t dst_size) {
     free(src2);
 }
 
-void test_ft_strcpy() {
-    _test_ft_strcpy("abc", "42Tokyo", 10);
-    _test_ft_strcpy("abc", "42", 10);
+void test_strcpy(void) {
+    t_strcpy("abc", "42Tokyo", 10);
+    t_strcpy("abc", "42", 10);
 
     // error case
-    // _test_ft_strcpy("abc", "42Tokyo", 4); // Buffer Overflow
-    // _test_ft_strcpy("abc", NULL, 10);
+    // t_strcpy("abc", "42Tokyo", 4); // Buffer Overflow
+    // t_strcpy("abc", NULL, 10);
     // char *s = strdup("test");
     // strcpy(s, NULL); // I don't know how I should implement!
     // strcpy(NULL, s);
@@ -70,7 +64,7 @@ void    _test_strcmp(const char *s1, const char *s2) {
     // assert(ft_strcmp(s1, s2) == strcmp(s1, s2));
 }
 
-void    test_strcmp() {
+void    test_strcmp(void) {
     _test_strcmp("aa", "ab");
 }
 
