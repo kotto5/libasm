@@ -7,10 +7,11 @@ SRCS = $(C_SRCS) $(ASM_SRCS)
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
 ASM_OBJS := $(patsubst %.asm, %.o, $(ASM_SRCS))
 OBJS = $(C_OBJS) $(ASM_OBJS)
-
+ 
 CC = gcc
-CFLAGS = -Wall
-# CFLAGS = -Wall -Wextra -Werror -g
+# CFLAGS = -Wall -O0
+# CFLAGS = -Wall -fsanitize=address -O0
+CFLAGS = -Wall -Wextra -Werror -g
 
 NASM = nasm
 NASMFLAGS = -f elf64
@@ -39,3 +40,12 @@ debug: $(OBJS)
 
 clean:
 	rm -f $(TARGET) $(OBJS)
+
+asm:
+	objdump -d $(TARGET)
+
+elf:
+	readelf -a $(TARGET)
+
+re: 
+	make clean debug
