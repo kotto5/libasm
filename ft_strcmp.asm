@@ -23,5 +23,5 @@ ft_strcmp:
 
     mov al, BYTE [rdi + rcx] ; "aa" -> 'a' = al
     mov bl, BYTE [rsi + rcx] ; "ab" -> 'b' = bl
-    sub eax, ebx ; eax = 'a' - 'b'
+    sub eax, ebx ; al = 'a' - 'b'
     ret
