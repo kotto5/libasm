@@ -61,7 +61,7 @@ void test_strcpy(void) {
 void    t_strcmp(const char *s1, const char *s2) {
     printf("og: %d\n", strcmp(s1, s2));
     printf("me: %d\n", ft_strcmp(s1, s2));
-    // assert(ft_strcmp(s1, s2) == strcmp(s1, s2));
+    assert(ft_strcmp(s1, s2) == strcmp(s1, s2));
 }
 
 void    test_strcmp(void) {
@@ -71,6 +71,8 @@ void    test_strcmp(void) {
     t_strcmp("a", "ab");
     t_strcmp("ab", "a");
     // t_strcmp(NULL, NULL); // segv
+    // t_strcmp(NULL, "a"); // segv
+    // t_strcmp("a", NULL); // segv
 }
 
 int main() {
