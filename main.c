@@ -12,18 +12,19 @@ void _test_ft_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
 }
 
-void test_ft_strlen() {
+void test_ft_strlen(void) {
+    _test_ft_strlen("a");
+    _test_ft_strlen("a\0a");
+
+    _test_ft_strlen("");
+    ft_strlen("");
+    printf("%ld\n", ft_strlen(""));
+    printf("%ld\n", strlen(""));
+
+    // error cases
     // test_ft_strlen(NULL); // segmentation fault
     // strlen(NULL);
     // ft_strlen(NULL);
-
-    test_ft_strlen("a");
-    test_ft_strlen("a\0a");
-    test_ft_strlen("");
-    // ft_strlen("");
-    printf("%ld\n", ft_strlen(""));
-    printf("%ld\n", strlen(""));
-    test_ft_strlen("aa");
 }
 
 void _test_ft_strcpy(char *dst, char *src, size_t dst_size) {
