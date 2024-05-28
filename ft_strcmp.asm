@@ -7,26 +7,21 @@ ft_strcmp:
     xor rcx, rcx
 
 .loop:
-    mov al, [rsi + rcx]
+    mov [esi], eax
     cmp [rdi + rcx], al
     jne .done
 
     test al, al
     jz .done
 
-;    mov al, [rdi + rcx]
-;    jz .done
-    
     inc rcx
     jmp .loop
 
 .done:
-    mov rdi, [rdi + rcx]
-    mov rsi, [rsi + rcx]
-    sub rdi, rsi
-    mov rax, rdi
+    xor rax, rax ; rax = 0
+    xor rbx, rbx ; rbx = 0
+
+    mov [rdi + rcx], eax ; "aa" -> 'a' = ebx
+    mov [rsi + rcx], ebx ; "ab" -> 'b' = eax
+    sub eax, ebx ; eax = 'a' - 'b'
     ret
-
-
-
-
