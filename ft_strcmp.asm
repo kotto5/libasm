@@ -21,7 +21,7 @@ ft_strcmp:
     xor rax, rax ; rax = 0
     xor rbx, rbx ; rbx = 0
 
-    mov [rdi + rcx], eax ; "aa" -> 'a' = ebx
-    mov [rsi + rcx], ebx ; "ab" -> 'b' = eax
+    mov al, BYTE [rdi + rcx] ; "aa" -> 'a' = al
+    mov bl, BYTE [rsi + rcx] ; "ab" -> 'b' = bl
     sub eax, ebx ; eax = 'a' - 'b'
     ret
