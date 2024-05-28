@@ -66,11 +66,12 @@ void    _test_strcmp(const char *s1, const char *s2) {
 
 void    test_strcmp(void) {
     _test_strcmp("aa", "ab");
+    _test_strcmp("ab", "aa");
 }
 
 int main() {
-    // test_ft_strlen();
-    // test_ft_strcpy();
+    // test_strlen();
+    // test_strcpy();
     test_strcmp();
     return 0;
 }
