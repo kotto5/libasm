@@ -67,6 +67,10 @@ void    _test_strcmp(const char *s1, const char *s2) {
 void    test_strcmp(void) {
     _test_strcmp("aa", "ab");
     _test_strcmp("ab", "aa");
+    _test_strcmp("a", "b");
+    _test_strcmp("a", "ab");
+    _test_strcmp("ab", "a");
+    _test_strcmp(NULL, NULL);
 }
 
 int main() {
