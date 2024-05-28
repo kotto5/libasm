@@ -70,6 +70,8 @@ void    test_strcmp(void) {
     t_strcmp("a", "b");
     t_strcmp("a", "ab");
     t_strcmp("ab", "a");
+
+    // error cases
     // t_strcmp(NULL, NULL); // segv
     // t_strcmp(NULL, "a"); // segv
     // t_strcmp("a", NULL); // segv
