@@ -3,10 +3,13 @@
 #include <string.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <unistd.h>
 
 extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
+extern ssize_t  ft_write(int fd, const void *buf, size_t count);
 
 void t_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
@@ -77,9 +80,27 @@ void    test_strcmp(void) {
     // t_strcmp("a", NULL); // segv
 }
 
+void    t_write(char *s, size_t count) {
+    ssize_t err_1 = write(3, s, count);
+    int errno_1 = errno;
+    ssize_t err_2 = ft_write(3, s, count);
+    int errno_2 = errno;
+    printf("og: %ld, my: %ld\n", err_1, err_2);
+    assert(err_1 == err_2);
+    if (err_1 != 0) {
+        printf("errno: og: %d, my: %d\n", errno_1, errno_2);
+        assert(errno_1 == errno_2);
+    }
+}
+
+void    test_wrtie(void) {
+    t_write("abc\n", 4);
+}
+
 int main() {
     // test_strlen();
     // test_strcpy();
-    test_strcmp();
+    // test_strcmp();
+    test_wrtie();
     return 0;
 }
