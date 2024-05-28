@@ -7,12 +7,12 @@ ft_strcmp:
     xor rcx, rcx
 
 .loop:
-    mov [esi], eax
-    cmp [rdi + rcx], al
+    mov al, [rdi + rcx]
+    cmp BYTE [rsi + rcx], al
     jne .done
 
     test al, al
-    jz .done
+    jz .done ; al == 0
 
     inc rcx
     jmp .loop
