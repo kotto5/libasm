@@ -81,17 +81,17 @@ void    test_strcmp(void) {
     // t_strcmp("a", NULL); // segv
 }
 
-void    t_write_return_value_and_errno(int fd[2], const void *buf, size_t count) {
-    ssize_t err = write(fd, buf, count);
-    int errno_1 = errno;
-    ssize_t err_2 = ft_write(fd, buf, count);
+void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count) {
+    ssize_t err_2 = ft_write(fd[0], buf, count);
     int errno_2 = errno;
 
-    assert(err == err_2);
-    if (err != 0) {
+    ssize_t err_1 = write(fd[1], buf, count);
+    int errno_1 = errno;
+
+    assert(err_1 == err_2);
+    if (err_1 == 0) {
         assert(errno_1 == errno_2);
     }
-
 }
 
 void    t_write(char *s, size_t count) {
@@ -106,7 +106,9 @@ void    t_write(char *s, size_t count) {
 
     // 1.
     int fd1 = open(filename1, O_CREAT | O_RDWR, 0644);
+    assert(fd1 != -1);
     int fd2 = open(filename2, O_CREAT | O_RDWR, 0644);
+    assert(fd2 != -1);
 
     // 2, 3
     int fds[2] = {fd1, fd2};
@@ -131,12 +133,16 @@ void    t_write(char *s, size_t count) {
 }
 
 void    test_wrtie(void) {
-    t_write("abc", 3);
+    printf("test_write() \n");
+    t_write("nn\n", 3);
+    printf("PASS-0\n");
     t_write("ab\0c", 4);
+    printf("PASS-1\n");
 
     // error cases
     int not_exist_fds[2] = {100, 101};
     t_write_return_value_and_errno(not_exist_fds, "abc", 3);
+    printf("PASS-2\n");
 }
 
 int main() {
