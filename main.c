@@ -11,6 +11,7 @@ extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t  ft_write(int fd, const void *buf, size_t count);
+extern ssize_t  ft_read(int fd, void *buf, size_t count);
 
 void t_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
@@ -140,15 +141,84 @@ void    test_wrtie(void) {
     printf("PASS-1\n");
 
     // error cases
-    int not_exist_fds[2] = {100, 101};
+    int not_exist_fds[2] = {100, 100};
     t_write_return_value_and_errno(not_exist_fds, "abc", 3);
     printf("PASS-2\n");
+    int minus_fds[2] = {-1, -1};
+    t_write_return_value_and_errno(minus_fds, "abc", 3);
+    printf("PASS-3\n");
+}
+
+void    t_read_return_value_and_errno(int fd[2], size_t count) {
+    char *buf1 = calloc(1, count);
+    char *buf2 = calloc(1, count);
+    lseek(fd[0], 0, SEEK_SET);
+    lseek(fd[1], 0, SEEK_SET);
+
+    ssize_t err_2 = ft_read(fd[0], (void *)buf1, count);
+    int errno_2 = errno;
+
+    ssize_t err_1 = read(fd[1], (void *)buf2, count);
+    int errno_1 = errno;
+
+    assert(err_1 == err_2);
+    if (err_1 < 0) {
+        assert(errno_1 == errno_2);
+    }
+    assert(memcmp(buf1, buf2, count) == 0);
+    free(buf1);
+    free(buf2);
+}
+
+void    t_read(char *s, size_t count) {
+    // test is executed in such process
+    // 1. create a test file.
+    // 2. write to the file.
+    // 3. read from the file using read and ft_read
+    // 4. compare the return value and errno
+    // 5. compare the contents of the files
+    // 6. remove the files
+    const char *filename1 = "test1.txt";
+
+    // 1.
+    int fd1 = open(filename1, O_CREAT | O_RDWR, 0644);
+    assert(fd1 != -1);
+    int fd2 = open(filename1, O_CREAT | O_RDWR, 0644);
+    assert(fd2 != -1);
+
+    // 2
+    write(fd1, s, count);
+
+    // 3, 4, 5
+    int fds[2] = {fd1, fd2};
+    t_read_return_value_and_errno(fds, count);
+    // 5. remove the files
+    close(fd1);
+    close(fd2);
+    unlink(filename1);
+}
+
+void    test_read(void) {
+    printf("test_read() \n");
+
+    t_read("abc", 3);
+    t_read("ab", 3);
+    t_read("abc", 0);
+    t_read("abc", 4);
+
+    // error cases
+    int not_exist_fds[2] = {100, 100};
+    t_read_return_value_and_errno(not_exist_fds, 3);
+
+    int minus_fds[2] = {-1, -1};
+    t_read_return_value_and_errno(minus_fds, 3);
 }
 
 int main() {
     // test_strlen();
     // test_strcpy();
     // test_strcmp();
-    test_wrtie();
+    // test_wrtie();
+    test_read();
     return 0;
 }
