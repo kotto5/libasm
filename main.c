@@ -89,7 +89,7 @@ void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count)
     int errno_1 = errno;
 
     assert(err_1 == err_2);
-    if (err_1 == 0) {
+    if (err_1 < 0) {
         assert(errno_1 == errno_2);
     }
 }
