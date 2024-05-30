@@ -20,7 +20,6 @@ ft_write:
     ; TODO rax(write の返り値を見て、error でなければreturn. )
     cmp rax, 0
     jne set_errno
-    mov rax, 0
     ret
 
 set_errno:
