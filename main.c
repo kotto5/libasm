@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
@@ -80,21 +81,62 @@ void    test_strcmp(void) {
     // t_strcmp("a", NULL); // segv
 }
 
-void    t_write(char *s, size_t count) {
-    ssize_t err_1 = write(3, s, count);
+void    t_write_return_value_and_errno(int fd[2], const void *buf, size_t count) {
+    ssize_t err = write(fd, buf, count);
     int errno_1 = errno;
-    ssize_t err_2 = ft_write(3, s, count);
+    ssize_t err_2 = ft_write(fd, buf, count);
     int errno_2 = errno;
-    printf("og: %ld, my: %ld\n", err_1, err_2);
-    assert(err_1 == err_2);
-    if (err_1 != 0) {
-        printf("errno: og: %d, my: %d\n", errno_1, errno_2);
+
+    assert(err == err_2);
+    if (err != 0) {
         assert(errno_1 == errno_2);
     }
+
+}
+
+void    t_write(char *s, size_t count) {
+    // test is executed in such process
+    // 1. create two test files.
+    // 2. write to the files using write and ft_write
+    // 3. compare the return value and errno
+    // 4. compare the contents of the files
+    // 5. remove the files
+    const char *filename1 = "test1.txt";
+    const char *filename2 = "test2.txt";
+
+    // 1.
+    int fd1 = open(filename1, O_CREAT | O_RDWR, 0644);
+    int fd2 = open(filename2, O_CREAT | O_RDWR, 0644);
+
+    // 2, 3
+    int fds[2] = {fd1, fd2};
+    t_write_return_value_and_errno(fds, s, count);
+
+    // 4.
+    char *buf1 = calloc(1, count);
+    char *buf2 = calloc(1, count);
+    lseek(fd1, 0, SEEK_SET);
+    lseek(fd2, 0, SEEK_SET);
+    read(fd1, buf1, count);
+    read(fd2, buf2, count);
+    assert(memcmp(buf1, buf2, count) == 0);
+    free(buf1);
+    free(buf2);
+
+    // 5. remove the files
+    close(fd1);
+    close(fd2);
+    unlink(filename1);
+    unlink(filename2);
 }
 
 void    test_wrtie(void) {
-    t_write("abc\n", 4);
+    t_write("abc", 3);
+    t_write("ab\0c", 4);
+
+    // error cases
+    int not_exist_fds[2] = {100, 101};
+    t_write_return_value_and_errno(not_exist_fds, "abc", 3);
 }
 
 int main() {
