@@ -15,11 +15,10 @@ global ft_write
 ; rax -> 1
 
 ft_write:
-    mov rax, 1
+    mov     rax, 1
     syscall
-    ; TODO rax(write の返り値を見て、error でなければreturn. )
     cmp rax, 0
-    jne set_errno
+    jl set_errno
     ret
 
 set_errno:
