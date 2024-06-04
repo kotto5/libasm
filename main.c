@@ -14,6 +14,8 @@ extern ssize_t  ft_write(int fd, const void *buf, size_t count);
 extern ssize_t  ft_read(int fd, void *buf, size_t count);
 extern char *ft_strdup(const char *s1);
 
+/* ------------ strlen ---------------- */
+
 void t_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
 }
@@ -24,8 +26,12 @@ void test_strlen(void) {
     t_strlen("a\0a");
 
     // error cases
+
+    // undefined behaviors
     // t_strlen(NULL); // segmentation fault
 }
+
+/* ------------ strcpy ---------------- */
 
 void t_strcpy(char *dst, char *src, size_t dst_size) {
     char *dst1 = calloc(1, dst_size);
@@ -58,7 +64,9 @@ void test_strcpy(void) {
     t_strcpy("abc", "42Tokyo", 10);
     t_strcpy("abc", "42", 10);
 
-    // error case
+    // error cases
+
+    // undefined behaviors
     // t_strcpy("abc", "42Tokyo", 4); // Buffer Overflow
     // t_strcpy("abc", NULL, 10);
     // char *s = strdup("test");
@@ -66,6 +74,8 @@ void test_strcpy(void) {
     // strcpy(NULL, s);
     // printf("org: %s\n", s);
 }
+
+/* ------------ strcmp ---------------- */
 
 void    t_strcmp(const char *s1, const char *s2) {
     printf("og: %d\n", strcmp(s1, s2));
@@ -81,10 +91,14 @@ void    test_strcmp(void) {
     t_strcmp("ab", "a");
 
     // error cases
+
+    // undefined behaviors
     // t_strcmp(NULL, NULL); // segv
     // t_strcmp(NULL, "a"); // segv
     // t_strcmp("a", NULL); // segv
 }
+
+/* ------------ write ---------------- */
 
 void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count) {
     ssize_t err_2 = ft_write(fd[0], buf, count);
@@ -151,7 +165,13 @@ void    test_wrtie(void) {
     int minus_fds[2] = {-1, -1};
     t_write_return_value_and_errno(minus_fds, "abc", 3);
     printf("PASS-3\n");
+
+    // undefined behaviors
+    // t_write("abc", 5); // Buffer Overflow
+    // t_write(NULL, 1); // segv
 }
+
+/* ------------ read ---------------- */
 
 void    t_read_return_value_and_errno(int fd[2], size_t count) {
     char *buf1 = calloc(1, count);
@@ -217,7 +237,11 @@ void    test_read(void) {
 
     int minus_fds[2] = {-1, -1};
     t_read_return_value_and_errno(minus_fds, 3);
+
+    // undefined behaviors
 }
+
+/* ------------ strdup ---------------- */
 
 void    t_strdup(char *s) {
     char *s1 = strdup(s);
@@ -239,7 +263,9 @@ void    test_strdup(void) {
     t_strdup("hmm");
 
     // error cases
-    // t_strdup(NULL); // segv
+
+    // undefined behaviors
+    t_strdup(NULL); // segv
 }
 
 int main() {
