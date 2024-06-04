@@ -113,7 +113,7 @@ void    test_strcmp(void) {
 /* ------------ write ---------------- */
 
 void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count) {
-    printf("%ssubtest: testing fd1: %d, fd2: %d, buf: [%s], count: %zu%s\n", GRAY, fd[0], fd[1], buf, count, RESET);
+    printf("%ssubtest:  testing fd1: %d, fd2: %d, buf: [%s], count: %zu%s\n", GRAY, fd[0], fd[1], buf, count, RESET);
 
     ssize_t err_2 = ft_write(fd[0], buf, count);
     int errno_2 = errno;
@@ -128,6 +128,8 @@ void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count)
 }
 
 void    t_write(char *s, size_t count) {
+    printf("%smaintest: testing s: [%s], count: %zu%s\n", GRAY, s, count, RESET);
+
     // test is executed in such process
     // 1. create two test files.
     // 2. write to the files using write and ft_write
@@ -185,7 +187,7 @@ void    test_wrtie(void) {
 /* ------------ read ---------------- */
 
 void    t_read_return_value_and_errno(int fd[2], size_t count) {
-    printf("%ssubtest: testing fd1: %d, fd2: %d, count: %zu%s\n", GRAY, fd[0], fd[1], count, RESET);
+    printf("%ssubtest:  testing fd1: %d, fd2: %d, count: %zu%s\n", GRAY, fd[0], fd[1], count, RESET);
 
     char *buf1 = calloc(1, count);
     char *buf2 = calloc(1, count);
@@ -209,7 +211,7 @@ void    t_read_return_value_and_errno(int fd[2], size_t count) {
 }
 
 void    t_read(char *s, size_t count) {
-    printf("%stesting s: [%s], count: %zu%s\n", GRAY, s, count, RESET);
+    printf("%smaintest: testing s: [%s], count: %zu%s\n", GRAY, s, count, RESET);
 
     // test is executed in such process
     // 1. create a test file.
