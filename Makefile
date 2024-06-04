@@ -1,12 +1,13 @@
 TARGET = libasm.a
 EXECUTABLE = main
+ASM_EXT = s
 
 C_SRCS := $(wildcard *.c)
-ASM_SRCS := $(wildcard *.s)
+ASM_SRCS := $(wildcard *.$(ASM_EXT))
 SRCS = $(C_SRCS) $(ASM_SRCS)
 
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
-ASM_OBJS := $(patsubst %.s, %.o, $(ASM_SRCS))
+ASM_OBJS := $(patsubst %.$(ASM_EXT), %.o, $(ASM_SRCS))
 OBJS = $(C_OBJS) $(ASM_OBJS)
 
 CC = gcc
@@ -37,7 +38,7 @@ $(EXECUTABLE): $(TARGET) $(C_OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 
-%.o: %.asm
+%.o: %.$(ASM_EXT)
 	$(NASM) $(NASMFLAGS) $<
 
 debug: $(OBJS)
