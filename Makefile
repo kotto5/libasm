@@ -1,11 +1,11 @@
 TARGET = main
 
 C_SRCS := $(wildcard *.c)
-ASM_SRCS := $(wildcard *.asm)
+ASM_SRCS := $(wildcard *.s)
 SRCS = $(C_SRCS) $(ASM_SRCS)
 
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
-ASM_OBJS := $(patsubst %.asm, %.o, $(ASM_SRCS))
+ASM_OBJS := $(patsubst %.s, %.o, $(ASM_SRCS))
 OBJS = $(C_OBJS) $(ASM_OBJS)
  
 CC = gcc
