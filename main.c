@@ -11,7 +11,7 @@ extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t  ft_write(int fd, const void *buf, size_t count);
-// extern ssize_t  ft_read(int fd, void *buf, size_t count);
+extern ssize_t  ft_read(int fd, void *buf, size_t count);
 
 void t_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
@@ -159,7 +159,7 @@ void    t_read_return_value_and_errno(int fd[2], size_t count) {
     ssize_t err_2 = read(fd[0], (void *)buf1, count);
     int errno_2 = errno;
 
-    ssize_t err_1 = read(fd[1], (void *)buf2, count);
+    ssize_t err_1 = ft_read(fd[1], (void *)buf2, count);
     int errno_1 = errno;
 
     assert(err_1 == err_2);
@@ -219,7 +219,7 @@ int main() {
     // test_strlen();
     // test_strcpy();
     // test_strcmp();
-    // test_wrtie();
+    test_wrtie();
     test_read();
     return 0;
 }
