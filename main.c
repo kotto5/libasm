@@ -37,13 +37,14 @@ void t_strcpy(char *dst, char *src, size_t dst_size) {
     char *src1 = strdup(src);
     char *src2 = strdup(src);
 
-    ft_strcpy(dst1, src1);
-    strcpy(dst2, src2);
+    char *strcpy_1 = ft_strcpy(dst1, src1);
+    char *strcpy_2 = strcpy(dst2, src2);
 
     printf("tst: %s\n", dst1);
     printf("org: %s\n", dst2);
 
     assert(strcmp(dst1, dst2) == 0);
+    assert(strcmp(strcpy_1, strcpy_2) == 0);
 
     free(dst1);
     free(dst2);
