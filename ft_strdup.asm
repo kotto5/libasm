@@ -14,8 +14,14 @@ ft_strdup:
     mov rdi, rax
     add rdi, 1
     call malloc
+    test rax, rax ; check if malloc failed
+    jz .error
     mov rdi, rax ; address of the allocated memory
     pop rsi ; address of the string
     call strcpy
 
+    ret
+
+.error:
+    mov rax, 0
     ret
