@@ -45,6 +45,8 @@ void t_strcpy(char *dst, char *src, size_t dst_size) {
 
     assert(strcmp(dst1, dst2) == 0);
     assert(strcmp(strcpy_1, strcpy_2) == 0);
+    assert(strcmp(strcpy_1, dst1) == 0);
+    assert(strcmp(strcpy_2, dst2) == 0);
 
     free(dst1);
     free(dst2);
