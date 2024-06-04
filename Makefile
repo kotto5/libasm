@@ -8,7 +8,6 @@ SRCS = $(C_SRCS) $(ASM_SRCS)
 
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
 ASM_OBJS := $(patsubst %.$(ASM_EXT), %.o, $(ASM_SRCS))
-OBJS = $(C_OBJS) $(ASM_OBJS)
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
@@ -41,18 +40,17 @@ $(EXECUTABLE): $(TARGET) $(C_OBJS)
 %.o: %.$(ASM_EXT)
 	$(NASM) $(NASMFLAGS) $<
 
-debug: $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) -fsanitize=address $^
-	
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(C_OBJS) $(ASM_OBJS)
+
+fclean: clean
+	rm -f $(TARGET) $(EXECUTABLE)
+
+re: fclean all
 
 asm:
 	objdump -d $(TARGET)
 
 elf:
 	readelf -a $(TARGET)
-
-re: 
-	make clean debug
