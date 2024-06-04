@@ -57,9 +57,6 @@ void t_strcpy(char *dst, char *src, size_t dst_size) {
     char *strcpy_1 = ft_strcpy(dst1, src1);
     char *strcpy_2 = strcpy(dst2, src2);
 
-    printf("tst: %s\n", dst1);
-    printf("org: %s\n", dst2);
-
     assert(strcmp(dst1, dst2) == 0);
     assert(strcmp(strcpy_1, strcpy_2) == 0);
     assert(strcmp(strcpy_1, dst1) == 0);
@@ -172,17 +169,13 @@ void    test_wrtie(void) {
     printf("%s test_write() %s\n", PINK, RESET);
 
     t_write("nn\n", 3);
-    printf("PASS-0\n");
     t_write("ab\0c", 4);
-    printf("PASS-1\n");
 
     // error cases
     int not_exist_fds[2] = {100, 100};
     t_write_return_value_and_errno(not_exist_fds, "abc", 3);
-    printf("PASS-2\n");
     int minus_fds[2] = {-1, -1};
     t_write_return_value_and_errno(minus_fds, "abc", 3);
-    printf("PASS-3\n");
 
     // undefined behaviors
     // t_write("abc", 5); // Buffer Overflow
@@ -271,7 +264,6 @@ void    t_strdup(char *s) {
     char *s1 = strdup(s);
     char *s2 = ft_strdup(s);
 
-    printf("%p, %p, %s\n", s1, s2, s);
     assert(strcmp(s1, s2) == 0);
 
     free(s1);
@@ -281,9 +273,7 @@ void    t_strdup(char *s) {
 void    test_strdup(void) {
     printf("%s test_strdup() %s\n", PINK, RESET);
 
-    printf("test 1:\n");
     t_strdup("I am not a robot");
-    printf("test 2:\n");
     t_strdup("hmm");
 
     // error cases
