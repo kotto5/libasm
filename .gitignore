@@ -5,3 +5,4 @@ a.out
 *.hex
 main
 test
+*.a
