@@ -215,11 +215,30 @@ void    test_read(void) {
     t_read_return_value_and_errno(minus_fds, 3);
 }
 
+void    t_strdup(char *s) {
+    char *s1 = strdup(s);
+    char *s2 = ft_strdup(s);
+
+    assert(strcmp(s1, s2) == 0);
+
+    free(s1);
+    free(s2);
+}
+
+void    test_strdup(void) {
+    t_strdup("I am not a robot");
+    t_strdup("hmm");
+
+    // error cases
+    t_strdup(NULL); // segv
+}
+
 int main() {
     // test_strlen();
     // test_strcpy();
     // test_strcmp();
     test_wrtie();
     test_read();
+    test_strdup();
     return 0;
 }
