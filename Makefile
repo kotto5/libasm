@@ -1,4 +1,5 @@
-TARGET = main
+TARGET = libasm.a
+EXECUTABLE = main
 
 C_SRCS := $(wildcard *.c)
 ASM_SRCS := $(wildcard *.s)
@@ -7,10 +8,8 @@ SRCS = $(C_SRCS) $(ASM_SRCS)
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
 ASM_OBJS := $(patsubst %.s, %.o, $(ASM_SRCS))
 OBJS = $(C_OBJS) $(ASM_OBJS)
- 
+
 CC = gcc
-# CFLAGS = -Wall -O0
-# CFLAGS = -Wall -fsanitize=address -O0
 CFLAGS = -Wall -Wextra -Werror -g
 
 NASM = nasm
@@ -20,13 +19,20 @@ LD = ld
 LDFLAGS = -L/usr/lib/x86_64-linux-gnu -lc -dynamic-linker /lib64/ld-linux-x86-64.so.2
 STARTUP = /usr/lib/x86_64-linux-gnu/crt1.o /usr/lib/x86_64-linux-gnu/crti.o /usr/lib/x86_64-linux-gnu/crtn.o
 
+ARC = ar
+ARCFLAGS = rcs
 
 .PHONY: all clean
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(LD) -o $@ $^ $(STARTUP) $(LDFLAGS)
+$(TARGET): $(ASM_OBJS)
+	$(ARC) $(ARCFLAGS) $@ $^
+
+test: $(EXECUTABLE)
+
+$(EXECUTABLE): $(TARGET) $(C_OBJS)
+	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
