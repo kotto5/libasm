@@ -22,7 +22,8 @@ extern char *ft_strdup(const char *s1);
 /* ------------ strlen ---------------- */
 
 void t_strlen(char *s) {
-    printf("%s testing [%s]%s\n", GREEN, s, RESET);
+    printf("%stesting [%s]%s\n", GRAY, s, RESET);
+
     assert(ft_strlen(s) == strlen(s));
 }
 
@@ -42,6 +43,8 @@ void test_strlen(void) {
 /* ------------ strcpy ---------------- */
 
 void t_strcpy(char *dst, char *src, size_t dst_size) {
+    printf("%stesting dst: [%s], src: [%s], dst_size: %zu%s\n", GRAY, dst, src, dst_size, RESET);
+
     char *dst1 = calloc(1, dst_size);
     char *dst2 = calloc(1, dst_size);
 
@@ -69,6 +72,8 @@ void t_strcpy(char *dst, char *src, size_t dst_size) {
 }
 
 void test_strcpy(void) {
+    printf("%s test_strcpy() %s\n", PINK, RESET);
+
     t_strcpy("abc", "42Tokyo", 10);
     t_strcpy("abc", "42", 10);
 
@@ -86,12 +91,14 @@ void test_strcpy(void) {
 /* ------------ strcmp ---------------- */
 
 void    t_strcmp(const char *s1, const char *s2) {
-    printf("og: %d\n", strcmp(s1, s2));
-    printf("me: %d\n", ft_strcmp(s1, s2));
+    printf("%stesting s1: [%s], s2: [%s]%s\n", GRAY, s1, s2, RESET);
+
     assert(ft_strcmp(s1, s2) == strcmp(s1, s2));
 }
 
 void    test_strcmp(void) {
+    printf("%s test_strcmp() %s\n", PINK, RESET);
+
     t_strcmp("aa", "ab");
     t_strcmp("ab", "aa");
     t_strcmp("a", "b");
@@ -109,6 +116,8 @@ void    test_strcmp(void) {
 /* ------------ write ---------------- */
 
 void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count) {
+    printf("%stesting fd1: %d, fd2: %d, buf: [%s], count: %zu%s\n", GRAY, fd[0], fd[1], buf, count, RESET);
+
     ssize_t err_2 = ft_write(fd[0], buf, count);
     int errno_2 = errno;
 
@@ -160,7 +169,8 @@ void    t_write(char *s, size_t count) {
 }
 
 void    test_wrtie(void) {
-    printf("test_write() \n");
+    printf("%s test_write() %s\n", PINK, RESET);
+
     t_write("nn\n", 3);
     printf("PASS-0\n");
     t_write("ab\0c", 4);
@@ -182,6 +192,8 @@ void    test_wrtie(void) {
 /* ------------ read ---------------- */
 
 void    t_read_return_value_and_errno(int fd[2], size_t count) {
+    printf("%stesting fd1: %d, fd2: %d, count: %zu%s\n", GRAY, fd[0], fd[1], count, RESET);
+
     char *buf1 = calloc(1, count);
     char *buf2 = calloc(1, count);
     lseek(fd[0], 0, SEEK_SET);
@@ -204,6 +216,8 @@ void    t_read_return_value_and_errno(int fd[2], size_t count) {
 }
 
 void    t_read(char *s, size_t count) {
+    printf("%stesting s: [%s], count: %zu%s\n", GRAY, s, count, RESET);
+
     // test is executed in such process
     // 1. create a test file.
     // 2. write to the file.
@@ -232,7 +246,7 @@ void    t_read(char *s, size_t count) {
 }
 
 void    test_read(void) {
-    printf("test_read() \n");
+    printf("%s test_read() %s\n", PINK, RESET);
 
     t_read("abc", 3);
     t_read("ab", 3);
@@ -252,6 +266,8 @@ void    test_read(void) {
 /* ------------ strdup ---------------- */
 
 void    t_strdup(char *s) {
+    printf("%stesting s: [%s]%s\n", GRAY, s, RESET);
+
     char *s1 = strdup(s);
     char *s2 = ft_strdup(s);
 
@@ -263,7 +279,7 @@ void    t_strdup(char *s) {
 }
 
 void    test_strdup(void) {
-    printf("test_strdup() \n");
+    printf("%s test_strdup() %s\n", PINK, RESET);
 
     printf("test 1:\n");
     t_strdup("I am not a robot");
