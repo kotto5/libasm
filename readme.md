@@ -1,3 +1,5 @@
+This project's aim is to implement function in **ASSEMBLY**.
+
 When you create archive file, you should
 ```Makefile
 make
