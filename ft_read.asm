@@ -24,7 +24,7 @@ ft_read:
 set_errno:
     mov rsi, rax
     call __errno_location
+    neg esi
     mov [rax], esi
-    ; TODO rax に -1 を入れる
     mov rax, -1
     ret

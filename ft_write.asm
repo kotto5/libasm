@@ -17,7 +17,7 @@ global ft_write
 ft_write:
     mov     rax, 1
     syscall
-    cmp rax, 0
+    cmp rax, 0 ; TODO: Is it okey compairing with 0? maybe 0xfffff001
     jl set_errno
     ret
 
@@ -26,6 +26,5 @@ set_errno:
     call __errno_location
     neg esi
     mov [rax], esi
-    ; TODO rax に -1 を入れる
     mov rax, -1
     ret
