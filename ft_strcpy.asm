@@ -20,4 +20,5 @@ ft_strcpy:
 
 
 .done:
+    mov rax, rdi
     ret
