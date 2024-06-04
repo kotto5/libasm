@@ -12,6 +12,7 @@ extern char *ft_strcpy(char *dst, char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t  ft_write(int fd, const void *buf, size_t count);
 extern ssize_t  ft_read(int fd, void *buf, size_t count);
+extern char *ft_strdup(const char *s1);
 
 void t_strlen(char *s) {
     assert(ft_strlen(s) == strlen(s));
@@ -219,6 +220,7 @@ void    t_strdup(char *s) {
     char *s1 = strdup(s);
     char *s2 = ft_strdup(s);
 
+    printf("%p, %p, %s\n", s1, s2, s);
     assert(strcmp(s1, s2) == 0);
 
     free(s1);
@@ -226,17 +228,21 @@ void    t_strdup(char *s) {
 }
 
 void    test_strdup(void) {
+    printf("test_strdup() \n");
+
+    printf("test 1:\n");
     t_strdup("I am not a robot");
+    printf("test 2:\n");
     t_strdup("hmm");
 
     // error cases
-    t_strdup(NULL); // segv
+    // t_strdup(NULL); // segv
 }
 
 int main() {
-    // test_strlen();
-    // test_strcpy();
-    // test_strcmp();
+    test_strlen();
+    test_strcpy();
+    test_strcmp();
     test_wrtie();
     test_read();
     test_strdup();
