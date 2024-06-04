@@ -7,6 +7,11 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#define GREEN "\033[0;32m"
+#define RESET "\033[0m"
+#define PINK "\033[0;35m"
+#define GRAY "\033[0;37m"
+
 extern size_t ft_strlen(char *s);
 extern char *ft_strcpy(char *dst, char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
@@ -17,10 +22,13 @@ extern char *ft_strdup(const char *s1);
 /* ------------ strlen ---------------- */
 
 void t_strlen(char *s) {
+    printf("%s testing [%s]%s\n", GREEN, s, RESET);
     assert(ft_strlen(s) == strlen(s));
 }
 
 void test_strlen(void) {
+    printf("%s test_strlen() %s\n", PINK, RESET);
+
     t_strlen("");
     t_strlen("abc");
     t_strlen("a\0a");
