@@ -279,7 +279,7 @@ void    test_strdup(void) {
     // error cases
 
     // undefined behaviors
-    t_strdup(NULL); // segv
+    // t_strdup(NULL); // segv
 }
 
 int main() {
