@@ -25,9 +25,9 @@ static int get_sign(const char *s) {
 
 int			ft_atoi_base(const char *str, char *base)
 {
-	if (str == NULL || !*str || base == NULL)
-		return (0);
-	
+	// if (str == NULL || base == NULL)
+	// segfault (which is referenced in original atoi)
+
 	size_t base_len = ft_strlen(base);
 
 	if (base_len <= 1 || base_len > __INT_MAX__ || \
@@ -40,9 +40,7 @@ int			ft_atoi_base(const char *str, char *base)
 	}
 
 	const char *initial_portion = get_initial_portion(str);
-	if (ft_strlen(initial_portion) == 0)
-		return 0;
-	
+
 	int sign = get_sign(initial_portion);
 	if (*initial_portion == '-' || *initial_portion == '+')
 		initial_portion++;
