@@ -43,7 +43,10 @@ int			ft_atoi_base(const char *str, char *base)
 	char *found = NULL;
 	while ((found = strchr(base, initial_portion[i])))
 	{
-		sum = sum * base_len + (found - base);
+		int value = (found - base);
+		if (sum > (__INT_MAX__ - value) / base_len)
+			return (0);
+		sum = sum * base_len + value;
 		i++;
 	}
 	return (sign * sum);
