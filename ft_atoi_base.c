@@ -28,9 +28,10 @@ int			ft_atoi_base(const char *str, char *base)
 	if (str == NULL || !*str || base == NULL)
 		return (0);
 	
-	ssize_t base_len = ft_strlen(base);
+	size_t base_len = ft_strlen(base);
 
-	if (base_len <= 1 || strchr(base, '+') || \
+	if (base_len <= 1 || base_len > __INT_MAX__ || \
+		strchr(base, '+') || \
 		strchr(base, '-') || strchr(base, ' '))
 		return (0);
 	for (size_t i = 0; i < base_len; i++) {
@@ -52,7 +53,7 @@ int			ft_atoi_base(const char *str, char *base)
 	while ((found = strchr(base, initial_portion[i])))
 	{
 		int value = (found - base);
-		if (sum > (__INT_MAX__ - value) / base_len)
+		if (sum > (__INT_MAX__ - value) / (int) base_len)
 			return (0);
 		sum = sum * base_len + value;
 		i++;
