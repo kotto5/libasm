@@ -20,3 +20,4 @@ executable  assembler(assembly);
 ex: mov, rax, 1 (オペコード, レジスタ, 定数)
 
 他にも条件分岐や, 他の関数を呼ぶためのオペコードなどが存在する
+**2**

@@ -25,10 +25,18 @@ static int get_sign(const char *s) {
 
 int			ft_atoi_base(const char *str, char *base)
 {
-	if (str == NULL || !*str || base == NULL || ft_strlen(base) <= 1)
+	if (str == NULL || !*str || base == NULL)
 		return (0);
+	
+	ssize_t base_len = ft_strlen(base);
 
-    ssize_t base_len = ft_strlen(base);
+	if (base_len <= 1 || strchr(base, '+') || \
+		strchr(base, '-') || strchr(base, ' '))
+		return (0);
+	for (size_t i = 0; i < base_len; i++) {
+		if (strchr(base + i + 1, base[i]))
+			return (0);
+	}
 
 	const char *initial_portion = get_initial_portion(str);
 	if (ft_strlen(initial_portion) == 0)
