@@ -18,6 +18,7 @@ extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t  ft_write(int fd, const void *buf, size_t count);
 extern ssize_t  ft_read(int fd, void *buf, size_t count);
 extern char *ft_strdup(const char *s1);
+extern int ft_atoi_base(const char *str, char *base);
 
 /* ------------ strlen ---------------- */
 
@@ -282,6 +283,33 @@ void    test_strdup(void) {
 
     // undefined behaviors
     // t_strdup(NULL); // segv
+}
+
+/* ------------ ft_atoi_base ---------------- */
+
+void    t_ft_atoi_base(const char *s, char *base) {
+    printf("%stesting s: [%s], base: [%s]%s\n", GRAY, s, base, RESET);
+
+    int atoi_base = ft_atoi_base(s, base);
+    int atoi_base_ = atoi(s);
+
+    assert(atoi_base == atoi_base_);
+}
+
+void    test_ft_atoi_base(void) {
+    printf("%s test_ft_atoi_base() %s\n", PINK, RESET);
+
+    t_ft_atoi_base("42", "0123456789");
+
+    assert(ft_atoi_base("abc", NULL) == 0);
+    assert(ft_atoi_base(NULL, NULL) == 0);
+    assert(ft_atoi_base(NULL, "abc") == 0);
+    assert(ft_atoi_base("abc", "") == 0);
+    assert(ft_atoi_base("abc", "-") == 0);
+    assert(ft_atoi_base("a", "-a") == 0);
+    assert(ft_atoi_base("a", "+") == 0);
+    assert(ft_atoi_base("a", "+a") == 0);
+    assert(ft_atoi_base("a", "abc") == 1);
 }
 
 int main() {
