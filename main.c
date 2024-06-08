@@ -6,6 +6,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <limits.h>
 
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
@@ -23,7 +24,7 @@ extern int ft_atoi_base(const char *str, char *base);
 /* ------------ strlen ---------------- */
 
 void t_strlen(char *s) {
-    printf("%stesting [%s]%s\n", GRAY, s, RESET);
+    // printf("%stesting [%s]%s\n", GRAY, s, RESET);
 
     assert(ft_strlen(s) == strlen(s));
 }
@@ -34,6 +35,12 @@ void test_strlen(void) {
     t_strlen("");
     t_strlen("abc");
     t_strlen("a\0a");
+
+    char *very_long = malloc(INT_MAX);
+    memset(very_long, 'A', INT_MAX - 1);
+    very_long[INT_MAX - 1] = '\0';
+    t_strlen(very_long);
+    free (very_long);
 
     // error cases
 
@@ -74,6 +81,16 @@ void test_strcpy(void) {
 
     t_strcpy("abc", "42Tokyo", 10);
     t_strcpy("abc", "42", 10);
+    t_strcpy("abc", "", 4);
+    t_strcpy("", "", 1);
+
+    ssize_t very_long_size = INT_MAX / 2;
+    // ssize_t very_long_size = INT_MAX;
+    char *very_long = malloc(very_long_size);
+    memset(very_long, 'A', very_long_size - 1);
+    very_long[very_long_size - 1] = '\0';
+    t_strcpy("", very_long, very_long_size);
+    free (very_long);
 
     // error cases
 
@@ -102,6 +119,9 @@ void    test_strcmp(void) {
     t_strcmp("a", "b");
     t_strcmp("a", "ab");
     t_strcmp("ab", "a");
+    t_strcmp("", "");
+    t_strcmp("", "a");
+    t_strcmp("ab", "");
 
     // error cases
 
@@ -116,9 +136,11 @@ void    test_strcmp(void) {
 void    t_write_return_value_and_errno(int fd[2], const char *buf, size_t count) {
     printf("%ssubtest:  testing fd1: %d, fd2: %d, buf: [%s], count: %zu%s\n", GRAY, fd[0], fd[1], buf, count, RESET);
 
+    errno = 0;
     ssize_t err_2 = ft_write(fd[0], buf, count);
     int errno_2 = errno;
 
+    errno = 0;
     ssize_t err_1 = write(fd[1], buf, count);
     int errno_1 = errno;
 
@@ -174,6 +196,9 @@ void    test_wrtie(void) {
     t_write("nn\n", 3);
     t_write("ab\0c", 4);
 
+    int stdouts[2] = {1, 1};
+    t_write_return_value_and_errno(stdouts, "test-abc\n", 9);
+
     // error cases
     int not_exist_fds[2] = {100, 100};
     t_write_return_value_and_errno(not_exist_fds, "abc", 3);
@@ -196,12 +221,15 @@ void    t_read_return_value_and_errno(int fd[2], size_t count) {
     lseek(fd[1], 0, SEEK_SET);
 
     // ssize_t err_2 = ft_read(fd[0], (void *)buf1, count);
+    errno = 0;
     ssize_t err_2 = read(fd[0], (void *)buf1, count);
     int errno_2 = errno;
 
+    errno = 0;
     ssize_t err_1 = ft_read(fd[1], (void *)buf2, count);
     int errno_1 = errno;
 
+    // printf("%ld, %ld\n", err_2, err_1);
     assert(err_1 == err_2);
     if (err_1 < 0) {
         assert(errno_1 == errno_2);
@@ -249,6 +277,9 @@ void    test_read(void) {
     t_read("abc", 0);
     t_read("abc", 4);
 
+    int stdins[2] = {0, 0};
+    t_read_return_value_and_errno(stdins, 3);
+
     // error cases
     int not_exist_fds[2] = {100, 100};
     t_read_return_value_and_errno(not_exist_fds, 3);
@@ -278,6 +309,16 @@ void    test_strdup(void) {
 
     t_strdup("I am not a robot");
     t_strdup("hmm");
+    t_strdup("");
+    t_strdup("");
+
+    ssize_t very_long_size = INT_MAX / 2;
+    // ssize_t very_long_size = INT_MAX;
+    char *very_long = malloc(very_long_size);
+    memset(very_long, 'A', very_long_size - 1);
+    very_long[very_long_size - 1] = '\0';
+    t_strcpy("", very_long, very_long_size);
+    free (very_long);
 
     // error cases
 
