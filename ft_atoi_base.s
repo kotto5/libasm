@@ -12,12 +12,12 @@ ft_atoi_base:
     mov rax, 0
     sub rsp, 0x64
 
-    mov -0x8(rbp), rdi ; str
-    mov -0x16(rbp), rsi ; base
+    mov [rbp-0x8], rdi ; str
+    mov [rbp-0x16], rsi ; base
 
     mov rdi, rsi
     call ft_strlen
-    mov -0x24(rbp), rax ; length of base
+    mov [rbp-0x24], rax ; length of base
     
     ; validate base
     cmp rax, 1
@@ -26,22 +26,22 @@ ft_atoi_base:
     jg ft_atoi_base_end
 
     call get_initial_portion
-    mov -0x30(rbp), rax ; initial portion of str
-    mov -0x38(rbp), 0 ; result
+    mov [rbp-0x30], rax ; initial portion of str
+    mov [rbp-0x38], 0 ; result
 ; get_sign
 
 ; calculate result
-    mov rdi, -0x16(rbp) ; base
-    mov rsi, -0x30(rbp) ; initial portion of str
+    mov rdi, [rbp-0x16] ; base
+    mov rsi, [rbp-0x30] ; initial portion of str
     call ft_strchr
     test rax, rax
     jz calc_end_atoi
     inc rsi ; str++
     sub rax, rdi ; value = strchr(base, *str) - base
-    mov rdx, -0x38(rbp) ; result
+    mov rdx, [rbp-0x38] ; result
     mul rdx, [rbp-0x24] ; result *= base length
     add rdx, rax ; result += value
-    mov -0x38(rbp), rdx ; result
+    mov [rbp-0x38], rdx ; result
     jmp ft_atoi_base
 
 end_ft_atoi_base:
@@ -50,7 +50,7 @@ end_ft_atoi_base:
     ret
 
 calc_end_atoi:
-    mov rax, -0x38(rbp)
+    mov rax, [rbp-0x38]
     jmp end_ft_atoi_base
 
 
