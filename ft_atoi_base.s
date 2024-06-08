@@ -54,30 +54,24 @@ calc_end_atoi:
     ; mov rax, [rbp-0x38]
     jmp end_ft_atoi_base
 
-
-; validate input
-
-
 ; char *ft_strchr(char *str, char c);
-;                (rdi      , rsi)
+;                (rdi      , sil)
 ft_strchr:
-    mov rdi, rsi
-    mov al, [rdi]
-    cmp al, 0
+    mov rax, rdi
+
+ft_strchr_loop:
+    ; inc rax
+    ; jmp ft_strchr_end
+
+    mov dil, [rax]
+    cmp dil, sil
     je ft_strchr_end
-    mov rdi, rdx
-    mov al, [rdi]
-    cmp al, 0
-    je ft_strchr_end
-    mov rdi, rdx
-    mov al, [rdi]
-    cmp al, [rsi]
-    je ft_strchr_end
-    inc rsi
-    jmp ft_strchr
+    test dil, dil
+    jz ft_strchr_end
+    inc rax
+    jmp ft_strchr_loop
 
 ft_strchr_end:
-    mov rax, rsi
     ret
 
 ; bool ft_isspace(char c);
