@@ -351,8 +351,9 @@ void    test_ft_atoi_base(void) {
     t_ft_atoi_base("2147483649");
     t_ft_atoi_base(" 1");
     t_ft_atoi_base("+1");
-    t_ft_atoi_base("++1"); // little error
+    t_ft_atoi_base("++1"); // little error (0)
     t_ft_atoi_base("-1");
+    t_ft_atoi_base("--1"); // little error (0)
     t_ft_atoi_base("-0");
     t_ft_atoi_base("+0");
     t_ft_atoi_base("-2147483647");
