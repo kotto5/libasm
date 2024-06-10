@@ -6,3 +6,4 @@ a.out
 main
 test
 *.a
+*.cpp
