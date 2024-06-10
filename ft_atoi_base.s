@@ -49,6 +49,18 @@ ft_atoi_base:
     test al, al
     jnz error_ft_atoi_base
 
+    ; if base has duplicate
+    mov rdi, [rbp-0x16]
+    mov rcx, 0
+loop_duplicate:
+    mov sil, [rdi + rcx]
+    call ft_strchr
+    test al, al
+    jnz error_ft_atoi_base
+    inc rcx
+    cmp rcx, [rbp-0x24]
+    jl loop_duplicate
+
     mov rdi, [rbp-0x8]
     call get_initial_portion
     mov [rbp-0x30], rax ; initial portion of str
