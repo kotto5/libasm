@@ -68,6 +68,7 @@ loop_duplicate:
     call get_initial_portion
     mov [rbp-0x32], rax ; initial portion of str
     mov DWORD [rbp-0x40], 0 ; result
+    mov DWORD [rbp-0x48], 1 ; result
 
 get_sign:
     mov rdi, [rbp-0x32]
@@ -75,10 +76,9 @@ get_sign:
     cmp sil, 43
     jne get_sign_negative
     mov rdi, [rbp-0x32]
-    ; inc rdi
     add rdi, 1
     mov [rbp-0x32], rdi
-    jmp get_sign
+    jmp calculate
 
 get_sign_negative:
     mov rdi, [rbp-0x32]
@@ -86,12 +86,11 @@ get_sign_negative:
     cmp sil, 45
     jne calculate
     mov rdi, [rbp-0x32]
-    ; inc rdi
     add rdi, 1
     mov [rbp-0x32], rdi
     mov rax, [rbp-0x48]
     neg rax
-    mov [rbp-0x24], rax ; result *= -1
+    mov [rbp-0x48], rax ; result *= -1
     jmp calculate
 
 calculate:
