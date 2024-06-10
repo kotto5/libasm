@@ -351,14 +351,18 @@ void    test_ft_atoi_base(void) {
     t_ft_atoi_base("2147483649");
     t_ft_atoi_base(" 1");
     t_ft_atoi_base("+1");
-    t_ft_atoi_base("++1"); // little error (0)
     t_ft_atoi_base("-1");
-    t_ft_atoi_base("--1"); // little error (0)
     t_ft_atoi_base("-0");
     t_ft_atoi_base("+0");
     t_ft_atoi_base("-2147483647");
     t_ft_atoi_base("-2147483648");
     t_ft_atoi_base("-2147483649");
+
+    // different from atoi, but it is ok in subject
+    assert(ft_atoi_base("++1", "0123456789") == 1); // 0 in atoi
+    assert(ft_atoi_base("--1", "0123456789") == 1); // 0 in atoi
+    assert(ft_atoi_base("---1", "0123456789") == -1); // 0 in atoi
+    assert(ft_atoi_base("---+1", "0123456789") == -1); // 0 in atoi
 
     // error (return 0)
     // - length (0 ~ 1)
