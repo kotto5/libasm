@@ -2,7 +2,7 @@ TARGET = libasm.a
 EXECUTABLE = main
 ASM_EXT = s
 
-C_SRCS := $(wildcard *.c)
+C_SRCS := main.c
 ASM_SRCS := $(wildcard *.$(ASM_EXT))
 SRCS = $(C_SRCS) $(ASM_SRCS)
 
@@ -10,7 +10,7 @@ C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
 ASM_OBJS := $(patsubst %.$(ASM_EXT), %.o, $(ASM_SRCS))
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -g
 
 NASM = nasm
 NASMFLAGS = -f elf64
@@ -34,12 +34,11 @@ test: $(EXECUTABLE)
 $(EXECUTABLE): $(TARGET) $(C_OBJS)
 	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $<
-
 %.o: %.$(ASM_EXT)
 	$(NASM) $(NASMFLAGS) $<
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f $(C_OBJS) $(ASM_OBJS)
