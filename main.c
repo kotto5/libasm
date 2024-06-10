@@ -342,16 +342,6 @@ void    test_ft_atoi_base(void) {
 
     // t_ft_atoi_base("42", "0123456789");
 
-    // assert(ft_atoi_base("abc", NULL) == 0);
-    // assert(ft_atoi_base(NULL, NULL) == 0);
-    // assert(ft_atoi_base(NULL, "abc") == 0);
-    // assert(ft_atoi_base("abc", "") == 0);
-    // assert(ft_atoi_base("abc", "-") == 0);
-    // assert(ft_atoi_base("a", "-a") == 0);
-    // assert(ft_atoi_base("a", "+") == 0);
-    // assert(ft_atoi_base("a", "+a") == 0);
-    // assert(ft_atoi_base("a", "abc") == 1);
-
     // assert(ft_atoi_base("1a", "0123456789") == 1);
 
     printf("test1: %d\n", ft_atoi_base("1a", "0123456789"));
@@ -386,8 +376,10 @@ void    test_ft_atoi_base(void) {
     // - have ('+', '-'. ' ')
     assert(ft_atoi_base("a", "-") == 0);
     assert(ft_atoi_base("a", "-abc") == 0);
+    assert(ft_atoi_base("a", "abc-") == 0);
     assert(ft_atoi_base("a", "+") == 0);
     assert(ft_atoi_base("a", "+abc") == 0);
+    assert(ft_atoi_base("a", "abc+") == 0);
     assert(ft_atoi_base("a", " ") == 0);
     assert(ft_atoi_base("a", " abc") == 0);
     assert(ft_atoi_base("a", "abc ") == 0);
