@@ -78,7 +78,7 @@ get_sign:
     mov rdi, [rbp-0x32]
     add rdi, 1
     mov [rbp-0x32], rdi
-    jmp calculate
+    jmp get_sign
 
 get_sign_negative:
     mov rdi, [rbp-0x32]
@@ -91,7 +91,7 @@ get_sign_negative:
     mov rax, [rbp-0x48]
     neg rax
     mov [rbp-0x48], rax ; result *= -1
-    jmp calculate
+    jmp get_sign
 
 calculate:
     mov rdi, [rbp-0x16] ; base
