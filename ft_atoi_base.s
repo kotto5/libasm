@@ -25,9 +25,9 @@ ft_atoi_base:
     ; validate base
     ; - length
     cmp rax, 1
-    jle end_ft_atoi_base
+    jle error_ft_atoi_base
     cmp rax, 2147483647
-    jg end_ft_atoi_base
+    jg error_ft_atoi_base
 
     ; if base has '+'
     mov rdi, [rbp-0x16]
