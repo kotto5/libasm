@@ -1,5 +1,6 @@
 extern ft_strlen
 extern ft_strchr
+extern strchr
 extern ft_isspace
 
 ; int ft_atoi_base(char *str, char *base);
@@ -27,20 +28,19 @@ ft_atoi_base:
     jle end_ft_atoi_base
     cmp rax, 2147483647
     jg end_ft_atoi_base
-    ; - TODO: duplicate
 
     ; if base has '+'
     mov rdi, [rbp-0x16]
     mov sil, 43
     call ft_strchr
-    test al, al
+    test rax, rax
     jnz error_ft_atoi_base
 
     ; if base has '-'
     mov rdi, [rbp-0x16]
     mov sil, 45
     call ft_strchr
-    test al, al
+    test rax, rax
     jnz error_ft_atoi_base
 
     ; if base has whitespace
@@ -50,10 +50,12 @@ ft_atoi_base:
     jnz error_ft_atoi_base
 
     ; if base has duplicate
-    mov rdi, [rbp-0x16]
     mov rcx, 0
 loop_duplicate:
-    mov sil, [rdi + rcx]
+    mov rdi, [rbp-0x16]
+    add rdi, rcx
+    mov sil, [rdi]
+    add rdi, 1
     call ft_strchr
     test al, al
     jnz error_ft_atoi_base
