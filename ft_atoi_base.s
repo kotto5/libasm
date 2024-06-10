@@ -1,4 +1,5 @@
 extern ft_strlen
+extern ft_strchr
 
 ; int ft_atoi_base(char *str, char *base);
 ;                 (rdi      , rsi)
@@ -68,26 +69,6 @@ calc_end_atoi:
     ; mov rax, 10
     mov rax, [rbp-0x38]
     jmp end_ft_atoi_base
-
-; char *ft_strchr(char *str, char c);
-;                (rdi      , sil)
-ft_strchr:
-    mov rax, rdi
-
-ft_strchr_loop:
-    ; inc rax
-    ; jmp ft_strchr_end
-
-    mov dil, [rax]
-    cmp dil, sil
-    je ft_strchr_end
-    test dil, dil
-    jz ft_strchr_end
-    inc rax
-    jmp ft_strchr_loop
-
-ft_strchr_end:
-    ret
 
 ; bool ft_isspace(char c);
 ft_isspace:
