@@ -382,12 +382,12 @@ void    test_ft_atoi_base(void) {
 }
 
 int main() {
-    // test_strlen();
-    // test_strcpy();
-    // test_strcmp();
-    // test_wrtie();
-    // test_read();
-    // test_strdup();
+    test_strlen();
+    test_strcpy();
+    test_strcmp();
+    test_wrtie();
+    test_read();
+    test_strdup();
     test_ft_atoi_base();
     return 0;
 }
