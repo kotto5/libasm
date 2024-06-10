@@ -45,8 +45,9 @@ ft_atoi_base:
 
     ; if base has whitespace
     mov rdi, [rbp-0x16]
-    call ft_isspace
-    test al, al
+    mov sil, 32
+    call ft_strchr
+    test rax, rax
     jnz error_ft_atoi_base
 
     ; if base has duplicate
