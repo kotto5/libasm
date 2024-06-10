@@ -69,6 +69,31 @@ loop_duplicate:
     mov [rbp-0x32], rax ; initial portion of str
     mov DWORD [rbp-0x40], 0 ; result
 
+get_sign:
+    mov rdi, [rbp-0x32]
+    mov sil, [rdi]
+    cmp sil, 43
+    jne get_sign_negative
+    mov rdi, [rbp-0x32]
+    ; inc rdi
+    add rdi, 1
+    mov [rbp-0x32], rdi
+    jmp get_sign
+
+get_sign_negative:
+    mov rdi, [rbp-0x32]
+    mov sil, [rdi]
+    cmp sil, 45
+    jne calculate
+    mov rdi, [rbp-0x32]
+    ; inc rdi
+    add rdi, 1
+    mov [rbp-0x32], rdi
+    mov rax, [rbp-0x48]
+    neg rax
+    mov [rbp-0x24], rax ; result *= -1
+    jmp calculate
+
 calculate:
     mov rdi, [rbp-0x16] ; base
     mov rsi, [rbp-0x32] ; initial portion of str
@@ -103,8 +128,8 @@ end_ft_atoi_base:
     ret
 
 calc_end_atoi:
-    ; mov rax, 10
     mov rax, [rbp-0x40]
+    imul rax, [rbp-0x48]
     jmp end_ft_atoi_base
 
 error_ft_atoi_base:
