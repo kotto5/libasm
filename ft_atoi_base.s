@@ -22,10 +22,13 @@ ft_atoi_base:
     mov [rbp-0x24], rax ; length of base
     
     ; validate base
+    ; - length
     cmp rax, 1
     jle end_ft_atoi_base
     cmp rax, 2147483647
     jg end_ft_atoi_base
+    ; - TODO: duplicate
+
 
     mov rdi, [rbp-0x8]
     call get_initial_portion
