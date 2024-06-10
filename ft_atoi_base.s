@@ -1,5 +1,6 @@
 extern ft_strlen
 extern ft_strchr
+extern ft_isspace
 
 ; int ft_atoi_base(char *str, char *base);
 ;                 (rdi      , rsi)
@@ -69,24 +70,6 @@ calc_end_atoi:
     ; mov rax, 10
     mov rax, [rbp-0x38]
     jmp end_ft_atoi_base
-
-; bool ft_isspace(char c);
-ft_isspace:
-    mov al, dil
-    cmp al, 0x20
-    je ft_isspace_end
-    cmp al, 0x9
-    je ft_isspace_end
-    cmp al, 0xA
-    je ft_isspace_end
-    cmp al, 0xD
-    je ft_isspace_end
-    mov al, 0
-    ret
-
-ft_isspace_end:
-    mov al, 1
-    ret
 
 ; char *get_initial_portion(char *str); return pointer to first non-whitespace character
 get_initial_portion:
