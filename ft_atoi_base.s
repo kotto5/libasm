@@ -29,6 +29,25 @@ ft_atoi_base:
     jg end_ft_atoi_base
     ; - TODO: duplicate
 
+    ; if base has '+'
+    mov rdi, [rbp-0x16]
+    mov sil, 43
+    call ft_strchr
+    test al, al
+    jnz error_ft_atoi_base
+
+    ; if base has '-'
+    mov rdi, [rbp-0x16]
+    mov sil, 45
+    call ft_strchr
+    test al, al
+    jnz error_ft_atoi_base
+
+    ; if base has whitespace
+    mov rdi, [rbp-0x16]
+    call ft_isspace
+    test al, al
+    jnz error_ft_atoi_base
 
     mov rdi, [rbp-0x8]
     call get_initial_portion
@@ -72,6 +91,10 @@ end_ft_atoi_base:
 calc_end_atoi:
     ; mov rax, 10
     mov rax, [rbp-0x38]
+    jmp end_ft_atoi_base
+
+error_ft_atoi_base:
+    mov rax, 0
     jmp end_ft_atoi_base
 
 ; char *get_initial_portion(char *str); return pointer to first non-whitespace character
