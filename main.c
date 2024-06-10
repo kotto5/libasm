@@ -378,6 +378,24 @@ void    test_ft_atoi_base(void) {
     // printf("%d\n", ft_atoi_base("012", "0123456789"));
     // printf("%d\n", ft_atoi_base("0123", "0123456789"));
     // printf("%d\n", ft_atoi_base("01234", "0123456789"));
+
+    // error (return 0)
+    // - length (0 ~ 1)
+    assert(ft_atoi_base("a", "") == 0);
+    assert(ft_atoi_base("a", "a") == 0);
+    // - have ('+', '-'. ' ')
+    assert(ft_atoi_base("a", "-") == 0);
+    assert(ft_atoi_base("a", "-abc") == 0);
+    assert(ft_atoi_base("a", "+") == 0);
+    assert(ft_atoi_base("a", "+abc") == 0);
+    assert(ft_atoi_base("a", " ") == 0);
+    assert(ft_atoi_base("a", " abc") == 0);
+    assert(ft_atoi_base("a", "abc ") == 0);
+
+    // undefined behavior
+    // assert(ft_atoi_base("abc", NULL) == 0);
+    // assert(ft_atoi_base(NULL, NULL) == 0);
+    // assert(ft_atoi_base(NULL, "abc") == 0);
 }
 
 int main() {
