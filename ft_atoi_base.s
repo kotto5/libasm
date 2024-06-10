@@ -66,13 +66,12 @@ loop_duplicate:
 
     mov rdi, [rbp-0x8]
     call get_initial_portion
-    mov [rbp-0x30], rax ; initial portion of str
-    mov DWORD [rbp-0x38], 0 ; result
-; get_sign
+    mov [rbp-0x32], rax ; initial portion of str
+    mov DWORD [rbp-0x40], 0 ; result
 
 calculate:
     mov rdi, [rbp-0x16] ; base
-    mov rsi, [rbp-0x30] ; initial portion of str
+    mov rsi, [rbp-0x32] ; initial portion of str
 
     mov sil, [rsi] ; *str
     call ft_strchr
@@ -82,20 +81,20 @@ calculate:
     test sil, sil
     jz calc_end_atoi
     
-    mov rbx, [rbp-0x30]
+    mov rbx, [rbp-0x32]
     ; inc rbx
     add rbx, 1
-    mov [rbp-0x30], rbx
-    ; inc DWORD [rbp-0x30] ; str++
+    mov [rbp-0x32], rbx
+    ; inc DWORD [rbp-0x32] ; str++
 
     ; mov rdi, [rbp-0x16]
     ; sub rdi, rax ; value = strchr(base, *str) - base
     ; mov rax, rdi ; value = strchr(base, *str) - base
     sub rax, [rbp-0x16]
-    mov rdx, [rbp-0x38] ; result
+    mov rdx, [rbp-0x40] ; result
     imul rdx, [rbp-0x24] ; result *= base length
     add rdx, rax ; result += value
-    mov [rbp-0x38], rdx ; result
+    mov [rbp-0x40], rdx ; result
     jmp calculate
 
 end_ft_atoi_base:
@@ -105,7 +104,7 @@ end_ft_atoi_base:
 
 calc_end_atoi:
     ; mov rax, 10
-    mov rax, [rbp-0x38]
+    mov rax, [rbp-0x40]
     jmp end_ft_atoi_base
 
 error_ft_atoi_base:
