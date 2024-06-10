@@ -328,11 +328,15 @@ void    test_strdup(void) {
 
 /* ------------ ft_atoi_base ---------------- */
 
-void    t_ft_atoi_base(const char *s, char *base) {
-    printf("%stesting s: [%s], base: [%s]%s\n", GRAY, s, base, RESET);
+void    t_ft_atoi_base(const char *s) {
+    printf("%stesting s: [%s]%s\n", GRAY, s, RESET);
 
-    int atoi_base = ft_atoi_base(s, base);
+    int atoi_base = ft_atoi_base(s, "0123456789");
     int atoi_base_ = atoi(s);
+
+    if (atoi_base != atoi_base_) {
+        printf("result: my: %d, original: %d\n\n", atoi_base, atoi_base_);
+    }
 
     assert(atoi_base == atoi_base_);
 }
@@ -341,11 +345,19 @@ void    test_ft_atoi_base(void) {
     printf("%s test_ft_atoi_base() %s\n", PINK, RESET);
 
     t_ft_atoi_base("42");
+    t_ft_atoi_base("0");
+    t_ft_atoi_base("2147483647");
+    t_ft_atoi_base("2147483648");
+    t_ft_atoi_base("2147483649");
     t_ft_atoi_base(" 1");
     t_ft_atoi_base("+1");
+    t_ft_atoi_base("++1"); // little error
     t_ft_atoi_base("-1");
     t_ft_atoi_base("-0");
     t_ft_atoi_base("+0");
+    t_ft_atoi_base("-2147483647");
+    t_ft_atoi_base("-2147483648");
+    t_ft_atoi_base("-2147483649");
 
     // error (return 0)
     // - length (0 ~ 1)
