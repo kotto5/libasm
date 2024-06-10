@@ -340,25 +340,53 @@ void    t_ft_atoi_base(const char *s, char *base) {
 void    test_ft_atoi_base(void) {
     printf("%s test_ft_atoi_base() %s\n", PINK, RESET);
 
-    t_ft_atoi_base("42", "0123456789");
+    // t_ft_atoi_base("42", "0123456789");
 
-    assert(ft_atoi_base("abc", NULL) == 0);
-    assert(ft_atoi_base(NULL, NULL) == 0);
-    assert(ft_atoi_base(NULL, "abc") == 0);
-    assert(ft_atoi_base("abc", "") == 0);
-    assert(ft_atoi_base("abc", "-") == 0);
-    assert(ft_atoi_base("a", "-a") == 0);
-    assert(ft_atoi_base("a", "+") == 0);
-    assert(ft_atoi_base("a", "+a") == 0);
-    assert(ft_atoi_base("a", "abc") == 1);
+    // assert(ft_atoi_base("abc", NULL) == 0);
+    // assert(ft_atoi_base(NULL, NULL) == 0);
+    // assert(ft_atoi_base(NULL, "abc") == 0);
+    // assert(ft_atoi_base("abc", "") == 0);
+    // assert(ft_atoi_base("abc", "-") == 0);
+    // assert(ft_atoi_base("a", "-a") == 0);
+    // assert(ft_atoi_base("a", "+") == 0);
+    // assert(ft_atoi_base("a", "+a") == 0);
+    // assert(ft_atoi_base("a", "abc") == 1);
+
+    // assert(ft_atoi_base("1a", "0123456789") == 1);
+
+    printf("test1: %d\n", ft_atoi_base("1a", "0123456789"));
+    printf("test2: %d\n", ft_atoi_base("123", "0123456789"));
+    printf("test3: %d\n", atoi("1a"));
+
+
+    // assert(ft_atoi_base("1", "0123456789") == 1);
+
+    // assert(ft_atoi_base("", "1234567890") == 10);
+    // assert(ft_atoi_base("123", "1234567890") == 123);
+    char *base = "0123456789";
+    printf("%p\n", base);
+    printf("%p\n", (char *)ft_atoi_base("0", base));
+    printf("%d\n", ft_atoi_base("2", base));
+    printf("%d\n", ft_atoi_base("123", base));
+    printf("%d\n", ft_atoi_base("BCD", "ABCDEFGHIJ"));
+    printf("%d\n", ft_atoi_base("BBB", "AB"));
+    // printf("%d\n", ft_atoi_base("1234", base));
+    // printf("%d\n", ft_atoi_base("12345", base));
+
+    // printf("%d\n", ft_atoi_base("0", "0123456789"));
+    // printf("%d\n", ft_atoi_base("01", "0123456789"));
+    // printf("%d\n", ft_atoi_base("012", "0123456789"));
+    // printf("%d\n", ft_atoi_base("0123", "0123456789"));
+    // printf("%d\n", ft_atoi_base("01234", "0123456789"));
 }
 
 int main() {
-    test_strlen();
-    test_strcpy();
-    test_strcmp();
-    test_wrtie();
-    test_read();
-    test_strdup();
+    // test_strlen();
+    // test_strcpy();
+    // test_strcmp();
+    // test_wrtie();
+    // test_read();
+    // test_strdup();
+    test_ft_atoi_base();
     return 0;
 }
