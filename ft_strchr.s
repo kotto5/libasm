@@ -14,9 +14,13 @@ ft_strchr_loop:
     cmp dil, sil
     je ft_strchr_end
     test dil, dil
-    jz ft_strchr_end
+    jz end_not_found
     inc rax
     jmp ft_strchr_loop
 
 ft_strchr_end:
     ret
+
+end_not_found:
+    mov rax, 0
+    jmp ft_strchr_end
