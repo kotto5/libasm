@@ -1,6 +1,8 @@
 section .text
 global ft_create_elem
 
+extern malloc
+
 ; t_list *ft_create_elem(void *data);
 ;                        (rdi)
 ft_create_elem:
@@ -22,7 +24,7 @@ ft_create_elem:
     mov [rax], rdi ; elem->data
 
     mov rax, [rbp-0x16]
-    mov [rax+8], 0 ; elem->next
+    mov QWORD [rax+8], 0 ; elem->next
 
 end:
     mov rsp, rbp
