@@ -463,6 +463,32 @@ void    test_ft_list_push_front(void) {
     // t_ft_list_push_front(NULL, "abc"); // segv
 }
 
+/* ------------ ft_list_size ---------------- */
+extern int ft_list_size(t_list *begin_list);
+
+void    t_ft_list_size(t_list *begin_list, int expected) {
+    printf("%stesting expected: %d%s\n", GRAY, expected, RESET);
+
+    assert(ft_list_size(begin_list) == expected);
+}
+
+void    test_ft_list_size(void) {
+    printf("%s test_ft_list_size() %s\n", PINK, RESET);
+
+    t_list *begin_list = NULL;
+    t_ft_list_size(begin_list, 0);
+
+    t_list *begin_list2 = ft_create_elem("abc");
+    t_ft_list_size(begin_list2, 1);
+
+    ft_list_push_front(&begin_list2, "def");
+    t_ft_list_size(begin_list2, 2);
+
+    // error cases
+
+    // undefined behaviors
+}
+
 int main() {
     // test_strlen();
     // test_strcpy();
@@ -473,5 +499,6 @@ int main() {
     test_ft_atoi_base();
     test_ft_create_elem();
     test_ft_list_push_front();
+    test_ft_list_size();
     return 0;
 }
