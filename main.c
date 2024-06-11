@@ -475,14 +475,13 @@ void    t_ft_list_size(t_list *begin_list, int expected) {
 void    test_ft_list_size(void) {
     printf("%s test_ft_list_size() %s\n", PINK, RESET);
 
-    t_list *begin_list = NULL;
-    t_ft_list_size(begin_list, 0);
+    t_ft_list_size(NULL, 0);
 
-    t_list *begin_list2 = ft_create_elem("abc");
-    t_ft_list_size(begin_list2, 1);
+    t_list *begin_list = ft_create_elem("abc");
+    t_ft_list_size(begin_list, 1);
 
-    ft_list_push_front(&begin_list2, "def");
-    t_ft_list_size(begin_list2, 2);
+    ft_list_push_front(&begin_list, "def");
+    t_ft_list_size(begin_list, 2);
 
     // error cases
 
