@@ -5,31 +5,17 @@ global ft_list_size
 ;                 (rdi)
 
 ft_list_size:
-    push rbp
-    mov rbp, rsp
-    mov rax, 0
-    sub rsp, 0x64
-
+    mov rcx, 0 ; count = 0
     test rdi, rdi
     jz end
 
-    mov [rbp-0x8], rdi ; begin_list
-    mov rcx, 1 ; count = 1
-
-ft_list_size_loop:
-    mov rdi, [rbp-0x8] ; *begin_list
+_loop:
+    inc rcx
     mov rdi, [rdi+8] ; begin_list->next
     test rdi, rdi
-    jz end_ft_list_size
-    inc rcx
-    mov [rbp-0x8], rdi ; *begin_list = *begin_list->next
-    jmp ft_list_size_loop
-
-end_ft_list_size:
-    mov rax, rcx
+    jz end
+    jmp _loop
 
 end:
-    mov rsp, rbp
-    pop rbp
+    mov rax, rcx
     ret
-    
