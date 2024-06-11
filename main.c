@@ -385,6 +385,34 @@ void    test_ft_atoi_base(void) {
     // assert(ft_atoi_base(NULL, "abc") == 0);
 }
 
+typedef struct s_list
+{
+    void *data;
+    struct s_list *next;
+} t_list;
+
+/* ------------ ft_create_elem ---------------- */
+extern t_list *ft_create_elem(void *data);
+
+void    t_ft_create_elem(void *data) {
+    printf("%stesting data: [%s]%s\n", GRAY, (char *)data, RESET);
+
+    t_list *elem = ft_create_elem(data);
+
+    assert(elem->data == data);
+    assert(elem->next == NULL);
+}
+
+void    test_ft_create_elem(void) {
+    printf("%s test_ft_create_elem() %s\n", PINK, RESET);
+
+    t_ft_create_elem("abc");
+    t_ft_create_elem(NULL);
+    // error cases
+
+    // undefined behaviors
+}
+
 int main() {
     test_strlen();
     test_strcpy();
