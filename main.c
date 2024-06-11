@@ -413,6 +413,46 @@ void    test_ft_create_elem(void) {
     // undefined behaviors
 }
 
+/* ------------ ft_list_push_front ---------------- */
+extern void ft_list_push_front(t_list **begin_list, void *data);
+
+void    t_ft_list_push_front(t_list **begin_list, void *data) {
+    printf("%stesting data: [%s]%s\n", GRAY, (char *)data, RESET);
+    const t_list *org = *begin_list;
+
+    ft_list_push_front(begin_list, data);
+
+    if (begin_list == NULL) {
+        assert(begin_list == NULL);
+        return;
+    }
+    else if (*begin_list == NULL) {
+        assert((*begin_list)->data == data);
+        assert((*begin_list)->next == NULL);
+        return;
+    }
+    else {
+        assert((*begin_list)->data == data);
+        assert((*begin_list)->next == org);
+        return ;
+    }
+}
+
+void    test_ft_list_push_front(void) {
+    printf("%s test_ft_list_push_front() %s\n", PINK, RESET);
+
+    t_list *begin_list = NULL;
+    t_ft_list_push_front(&begin_list, "abc");
+
+    t_list *begin_list2 = ft_create_elem("abc");
+    t_ft_list_push_front(&begin_list2, "def");
+
+    // error cases
+
+    // undefined behaviors
+    // t_ft_list_push_front(NULL, "abc"); // segv
+}
+
 int main() {
     test_strlen();
     test_strcpy();
