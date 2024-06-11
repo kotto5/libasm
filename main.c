@@ -417,22 +417,31 @@ void    test_ft_create_elem(void) {
 extern void ft_list_push_front(t_list **begin_list, void *data);
 
 void    t_ft_list_push_front(t_list **begin_list, void *data) {
-    printf("%stesting data: [%s]%s\n", GRAY, (char *)data, RESET);
-    const t_list *org = *begin_list;
+    printf("%stesting data: [%p]%s\n", GRAY, (char *)data, RESET);
+    t_list *org = NULL;
+    if (begin_list != NULL) {
+        org = *begin_list;
+    }
 
+    // printf("begin_list: %p\n", begin_list);
+    // printf("*begin_list: %p\n", *begin_list);
     ft_list_push_front(begin_list, data);
+    // printf("begin_list: %p\n", begin_list);
+    // printf("*begin_list: %p\n", *begin_list);
 
     if (begin_list == NULL) {
         assert(begin_list == NULL);
         return;
     }
-    else if (*begin_list == NULL) {
+    else if (org == NULL) {
         assert((*begin_list)->data == data);
         assert((*begin_list)->next == NULL);
         return;
     }
     else {
         assert((*begin_list)->data == data);
+        // printf("*begin_list_next: %p\n", (*begin_list)->next);
+        // printf("org: %p\n", org);
         assert((*begin_list)->next == org);
         return ;
     }
@@ -441,11 +450,12 @@ void    t_ft_list_push_front(t_list **begin_list, void *data) {
 void    test_ft_list_push_front(void) {
     printf("%s test_ft_list_push_front() %s\n", PINK, RESET);
 
+    t_list *begin_list2 = ft_create_elem("abc");
+    t_ft_list_push_front(&begin_list2, "def");
+
     t_list *begin_list = NULL;
     t_ft_list_push_front(&begin_list, "abc");
 
-    t_list *begin_list2 = ft_create_elem("abc");
-    t_ft_list_push_front(&begin_list2, "def");
 
     // error cases
 
@@ -454,12 +464,14 @@ void    test_ft_list_push_front(void) {
 }
 
 int main() {
-    test_strlen();
-    test_strcpy();
-    test_strcmp();
-    test_wrtie();
-    test_read();
-    test_strdup();
+    // test_strlen();
+    // test_strcpy();
+    // test_strcmp();
+    // test_wrtie();
+    // test_read();
+    // test_strdup();
     test_ft_atoi_base();
+    test_ft_create_elem();
+    test_ft_list_push_front();
     return 0;
 }

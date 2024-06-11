@@ -27,11 +27,12 @@ ft_list_push_front:
     mov [rbp-0x24], rax ; elem
 
     mov rax, [rbp-0x24] ; elem
-    mov rsi, [rbp-0x32] ; *begin_list
-    mov [rbp-0x8], rax ; *begin_list = elem
+    mov rsi, [rbp-0x8] ; *begin_list
+    mov rcx, [rsi] ; rcx == original head of list
+    mov [rsi], rax ; *begin_list = elem
     test rsi, rsi
-    jz end
-    mov [rax+8], rsi ; elem->next = *begin_list
+    ; jz end
+    mov [rax+8], rcx ; elem->next = *begin_list
 
 end:
     mov rsp, rbp
