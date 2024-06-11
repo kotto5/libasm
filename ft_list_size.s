@@ -15,16 +15,14 @@ ft_list_size:
 
     mov [rbp-0x8], rdi ; begin_list
     mov rcx, 1 ; count = 1
-    mov rdi, [rdi] ; *begin_list
-    mov [rbp-0x16], rdi ; *begin_list
 
 ft_list_size_loop:
-    mov rdi, [rbp-0x16] ; *begin_list
-    mov rdi, [rdi+8] ; *begin_list->next
+    mov rdi, [rbp-0x8] ; *begin_list
+    mov rdi, [rdi+8] ; begin_list->next
     test rdi, rdi
     jz end_ft_list_size
     inc rcx
-    mov [rbp-0x16], rdi ; *begin_list = *begin_list->next
+    mov [rbp-0x8], rdi ; *begin_list = *begin_list->next
     jmp ft_list_size_loop
 
 end_ft_list_size:
