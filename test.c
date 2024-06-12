@@ -25,43 +25,42 @@ void ft_list_sort(t_list **begin_list, int (*cmp)()) {
     if (!begin_list || !*begin_list)
         return ;
     t_list **_1st = begin_list;
-    t_list **_2nd = &(*begin_list)->next;
+    t_list **_2nd = &(*_1st)->next;
     t_list **_3rd = &(*_2nd)->next;
-    // printf("AA\n");
+    printf("test-2\n");
     while (1) {
         printf("AA 1st: %p, 2st: %p, 3rd: %p\n", (*_1st), (*_2nd), (*_3rd));
         if (*_3rd != NULL)
             printf("AA 1st: %p, 2st: %p, 3rd: %p\n", (*_1st)->data, (*_2nd)->data, (*_3rd)->data);
-        if (cmp((*_1st)->data, (*_2nd)->data) < 0) {
-            printf("swap!\n");
+        if (cmp((*_1st)->data, (*_2nd)->data) > 0) {
             t_list *_1nd_tmp = *_1st;
-            t_list *_2nd_tmp = *_2nd;
-            t_list *_3rd_tmp = *_3rd;
 
-            *_2nd = _3rd_tmp;
+            *_1st = *_2nd;
+            *_2nd = *_3rd;
             *_3rd = _1nd_tmp;
-            *_1st = _2nd_tmp;
+
+            t_list **swap_tmp = _2nd;
+            _2nd = _3rd;
+            _3rd = swap_tmp;
         }
-        // printf("BB 1st: %p, 2st: %p, 3rd: %p\n", (*_1st)->data, (*_2nd)->data, (*_3rd)->data);
         _1st = _2nd;
-        // printf("CC 1st: %p, 2st: %p, 3rd: %p\n", (*_1st)->data, (*_2nd)->data, (*_3rd)->data);
         _2nd = _3rd;
-        // printf("DD\n");
-        if (*_3rd == NULL || (*_3rd)->next == NULL)
+        if (*_3rd == NULL)
             break;
         else
             _3rd = &(*_3rd)->next;
-        // printf("EE\n");
     }
 }
 
 void    ft_bubble_sort(t_list **begin_list, int (*cmp)()) {
     t_list **itr = begin_list;
-    while (*itr && (*itr)->next) {
+    int i = 0;
+    int list_len = ft_list_size(*begin_list);
+    while (i < list_len) {
         printf("========================\n");
         print_list(*begin_list);
-        ft_list_sort(itr, cmp);
-        itr = &(*itr)->next;
+        ft_list_sort(begin_list, cmp);
+        i++;
     }
     print_list(*begin_list);
 }
