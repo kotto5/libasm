@@ -40,7 +40,7 @@ void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd) {
     *_3rd = &(**_2nd)->next;
 }
 
-void ft_list_sort(t_list **begin_list, int (*cmp)()) {
+void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)()) {
     if (!begin_list || !*begin_list)
         return ;
     t_list **_1st = begin_list;
@@ -66,37 +66,15 @@ int ft_list_size(t_list *begin_list) {
     return i;
 }
 
-void    ft_bubble_sort(t_list **begin_list, int (*cmp)()) {
-    t_list **itr = begin_list;
-    int i = 0;
+void    ft_list_sort(t_list **begin_list, int (*cmp)()) {
     int list_len = ft_list_size(*begin_list);
-    while (i < list_len) {
-        printf("========================\n");
-        print_list(*begin_list);
-        ft_list_sort(begin_list, cmp);
-        i++;
+    while (list_len-- > 0) {
+        ft_list_sort_one_liner(begin_list, cmp);
     }
-    print_list(*begin_list);
 }
 
-// void    ft_bubble_sort(t_list **begin_list, int (*cmp)()) {
-//     t_list **itr = begin_list;
-//     while (*itr) {
-//         t_list **itr2 = &(*itr)->next;
-//         while (*itr2) {
-//             if (cmp((*itr)->data, (*itr2)->data) > 0) {
-//                 void *tmp = (*itr)->data;
-//                 (*itr)->data = (*itr2)->data;
-//                 (*itr2)->data = tmp;
-//             }
-//             itr2 = &(*itr2)->next;
-//         }
-//         itr = &(*itr)->next;
-//     }
-// }
-
 int compare(void *a, void *b) {
-    printf("a: %d b: %d\n", (int)a, (int)b);
+    // printf("a: %d b: %d\n", (int)a, (int)b);
     return (int)a - (int)b;
 }
 
@@ -115,7 +93,7 @@ int  main() {
     ft_list_push_front(&list, ft_create_elem((void *)1));
     // print_list(list);
     // ft_list_sort(&list, compare);
-    ft_bubble_sort(&list, compare);
+    ft_list_sort(&list, compare);
     // print_list(list);
     return 0;
 }
