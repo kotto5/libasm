@@ -27,6 +27,13 @@ void    swap(void **a, void **b) {
     *b = tmp;
 }
 
+void    rotate(void **a, void **b, void **c) {
+    void *tmp = *a;
+    *a = *b;
+    *b = *c;
+    *c = tmp;
+}
+
 void ft_list_sort(t_list **begin_list, int (*cmp)()) {
     if (!begin_list || !*begin_list)
         return ;
@@ -39,8 +46,7 @@ void ft_list_sort(t_list **begin_list, int (*cmp)()) {
         if (*_3rd != NULL)
             printf("AA 1st: %p, 2st: %p, 3rd: %p\n", (*_1st)->data, (*_2nd)->data, (*_3rd)->data);
         if (cmp((*_1st)->data, (*_2nd)->data) > 0) {
-            t_list *_1nd_tmp = *_1st;
-
+            rotate(_1st, _2nd, _3rd);
             swap(&_2nd, &_3rd);
         }
         _1st = _2nd;
