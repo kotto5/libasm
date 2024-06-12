@@ -21,6 +21,12 @@ t_list *ft_list_push_front(t_list **begin_list, t_list *elem) {
     return elem;
 }
 
+void    swap(void **a, void **b) {
+    void *tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
 void ft_list_sort(t_list **begin_list, int (*cmp)()) {
     if (!begin_list || !*begin_list)
         return ;
@@ -35,13 +41,7 @@ void ft_list_sort(t_list **begin_list, int (*cmp)()) {
         if (cmp((*_1st)->data, (*_2nd)->data) > 0) {
             t_list *_1nd_tmp = *_1st;
 
-            *_1st = *_2nd;
-            *_2nd = *_3rd;
-            *_3rd = _1nd_tmp;
-
-            t_list **swap_tmp = _2nd;
-            _2nd = _3rd;
-            _3rd = swap_tmp;
+            swap(&_2nd, &_3rd);
         }
         _1st = _2nd;
         _2nd = _3rd;
