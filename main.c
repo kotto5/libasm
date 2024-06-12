@@ -488,6 +488,40 @@ void    test_ft_list_size(void) {
     // undefined behaviors
 }
 
+/* ------------ ft_list_sort ---------------- */
+
+void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
+    printf("%stesting%s\n", GRAY, RESET);
+    int before_size = ft_list_size(*begin_list);
+
+    ft_list_sort(begin_list, cmp);
+    assert(before_size == ft_list_size(*begin_list));
+    for (t_list *tmp = *begin_list; tmp->next; tmp = tmp->next) {
+        assert(cmp(tmp->data, tmp->next->data) <= 0);
+    }
+}
+
+int compare_integer(void *a, void *b) {
+    return (int)a - (int)b;
+}
+
+void    test_ft_list_sort(void) {
+    printf("%s test_ft_list_sort() %s\n", PINK, RESET);
+
+    t_list *begin_list = NULL;
+    t_ft_list_sort(&begin_list, compare_integer);
+
+    ft_list_push_front(&begin_list, (void *)1);
+    t_ft_list_sort(&begin_list, compare_integer);
+
+    ft_list_push_front(&begin_list, (void *)2);
+    t_ft_list_sort(&begin_list, compare_integer);
+
+    // error cases
+
+    // undefined behaviors
+}
+
 int main() {
     // test_strlen();
     // test_strcpy();
