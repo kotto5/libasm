@@ -44,20 +44,16 @@ void ft_list_sort(t_list **begin_list, int (*cmp)()) {
     if (!begin_list || !*begin_list)
         return ;
     t_list **_1st = begin_list;
-    t_list **_2nd = &(*_1st)->next;
-    t_list **_3rd = &(*_2nd)->next;
-    printf("test-2\n");
+    t_list **_2nd;
+    t_list **_3rd;
     while (1) {
-        printf("AA 1st: %p, 2st: %p, 3rd: %p\n", (*_1st), (*_2nd), (*_3rd));
-        if (*_3rd != NULL)
-            printf("AA 1st: %p, 2st: %p, 3rd: %p\n", (*_1st)->data, (*_2nd)->data, (*_3rd)->data);
+        proceed_next(&_1st, &_2nd, &_3rd);
         if (cmp((*_1st)->data, (*_2nd)->data) > 0) {
             rotate(_1st, _2nd, _3rd);
             swap(&_2nd, &_3rd);
         }
         if (*_3rd == NULL)
             break;
-        proceed_next(&_1st, &_2nd, &_3rd);
     }
 }
 
