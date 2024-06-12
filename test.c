@@ -34,6 +34,12 @@ void    rotate(void **a, void **b, void **c) {
     *c = tmp;
 }
 
+void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd) {
+    *_1st = *_2nd;
+    *_2nd = *_3rd;
+    *_3rd = &(**_3rd)->next;
+}
+
 void ft_list_sort(t_list **begin_list, int (*cmp)()) {
     if (!begin_list || !*begin_list)
         return ;
@@ -49,12 +55,9 @@ void ft_list_sort(t_list **begin_list, int (*cmp)()) {
             rotate(_1st, _2nd, _3rd);
             swap(&_2nd, &_3rd);
         }
-        _1st = _2nd;
-        _2nd = _3rd;
         if (*_3rd == NULL)
             break;
-        else
-            _3rd = &(*_3rd)->next;
+        proceed_next(&_1st, &_2nd, &_3rd);
     }
 }
 
