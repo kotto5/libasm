@@ -35,9 +35,9 @@ void    rotate(void **a, void **b, void **c) {
 }
 
 void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd) {
-    *_1st = *_2nd;
-    *_2nd = *_3rd;
-    *_3rd = &(**_3rd)->next;
+    *_1st = &(**_1st)->next;
+    *_2nd = &(**_1st)->next;
+    *_3rd = &(**_2nd)->next;
 }
 
 void ft_list_sort(t_list **begin_list, int (*cmp)()) {
