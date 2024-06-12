@@ -52,6 +52,15 @@ void ft_list_sort(t_list **begin_list, int (*cmp)()) {
     }
 }
 
+int ft_list_size(t_list *begin_list) {
+    int i = 0;
+    while (begin_list) {
+        i++;
+        begin_list = begin_list->next;
+    }
+    return i;
+}
+
 void    ft_bubble_sort(t_list **begin_list, int (*cmp)()) {
     t_list **itr = begin_list;
     int i = 0;
