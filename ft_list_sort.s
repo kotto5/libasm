@@ -2,6 +2,10 @@ extern ft_list_size
 
 section .text
     global ft_list_sort
+    ; global swap
+    ; global rotate
+    ; global proceed_next
+    ; global ft_list_sort_one_liner
 
 swap:
     ; 引数:
