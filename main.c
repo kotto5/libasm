@@ -618,7 +618,11 @@ void    print_list(t_list *lst) {
 void    test_ft_list_sort(void) {
     printf("%s test_ft_list_sort() %s\n", PINK, RESET);
 
+    t_ft_list_sort(NULL, compare_integer);
+
     t_list *begin_list = NULL;
+    t_ft_list_sort(&begin_list, compare_integer);
+
     // t_ft_list_sort(&begin_list, compare_integer);
 
     ft_list_push_front(&begin_list, (void *)1);
