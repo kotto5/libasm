@@ -648,7 +648,7 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (
     if (!begin_list || !*begin_list)
         return ;
     t_list **change = begin_list;
-    while (change) {
+    while (*change) {
         if (cmp((*change)->data, data_ref) == 0) {
             t_list *tmp = *change;
             *change = (*change)->next;
