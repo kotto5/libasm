@@ -1,7 +1,7 @@
 extern ft_list_size
 
 section .text
-    global ft_list_sort_one_liner
+    global ft_list_sort
 
 swap:
     ; 引数:
@@ -187,43 +187,46 @@ ft_list_sort_one_liner:
     ret
 
 ; ft_list_sort関数の定義
-; ft_list_sort:
-;     ; 引数:
-;     ; rdi: begin_list
-;     ; rsi: cmp
+ft_list_sort:
+    ; 引数:
+    ; rdi: begin_list
+    ; rsi: cmp
 
-;     ; プロローグ
-;     push rbp
-;     mov rbp, rsp
-;     push rbx
-;     push r12
-;     push r13
+    ; プロローグ
+    push rbp
+    mov rbp, rsp
+    sub rsp, 0x20
 
-;     ; 引数をレジスタから保存
-;     mov r12, rdi  ; r12 = begin_list
-;     mov r13, rsi  ; r13 = cmp
+    ; 引数をレジスタから保存
+    mov [rbp-0x8], rdi  ; [rbp-0x8] = begin_list
+    mov [rbp-0x10], rsi ; [rbp-0x10] = cmp
 
-;     ; list_len = ft_list_size(*begin_list);
-;     mov rdi, [r12]  ; rdi = *begin_list
-;     call ft_list_size
-;     mov ebx, eax    ; ebx = list_len
+    ; list_len = ft_list_size(*begin_list);
+    mov rdi, [rbp-0x8] ; rdi = begin_list
+    mov rdi, [rdi]
+    call ft_list_size
+    mov [rbp-0x18], rax ; [rbp-0x18] = list_len
 
-; .loop_start:
-;     ; while (list_len-- > 0)
-;     dec ebx
-;     js .done
+.loop_start:
+    ; while (list_len-- > 0)
+    mov rax, [rbp-0x18] ; rax = list_len
+    dec rax
+    test rax, rax
+    jz .done
+    mov [rbp-0x18], rax ; list_len = rax
 
-;     ; ft_list_sort_one_liner(begin_list, cmp);
-;     mov rdi, r12  ; rdi = begin_list
-;     mov rsi, r13  ; rsi = cmp
-;     call ft_list_sort_one_liner
+    ; ft_list_sort_one_liner(begin_list, cmp);
+    mov rdi, [rbp-0x8]  ; rdi = begin_list
+    mov rsi, [rbp-0x10] ; rsi = cmp
+    call ft_list_sort_one_liner
 
-;     jmp .loop_start
+    jmp .loop_start
 
-; .done:
-;     ; エピローグ
-;     pop r13
-;     pop r12
-;     pop rbx
-;     pop rbp
-;     ret
+.done:
+    ; エピローグ
+    pop r13
+    pop r12
+    pop rbx
+    mov rsp, rbp
+    pop rbp
+    ret
