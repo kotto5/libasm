@@ -491,9 +491,9 @@ void    test_ft_list_size(void) {
 // #if 1
 /* test */
 
-#if 1
+#if 0
 void    swap(void **a, void **b) {
-    printf("swapping\n");
+    // printf("swapping\n");
     // printf("swapping %p, %p\n", a, b);
     void *tmp = *a;
     *a = *b;
@@ -505,6 +505,7 @@ extern void    swap(void **a, void **b);
 
 #if 0
 void    rotate(void **a, void **b, void **c) {
+    printf("rotate\n");
     void *tmp = *a;
     *a = *b;
     *b = *c;
@@ -516,6 +517,12 @@ extern void    rotate(void **a, void **b, void **c);
 
 #if 0
 void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd) {
+    // printf("proceed_next\n");
+    printf("proceed_next %p, %p, %p\n", _1st, _2nd, _3rd);
+    printf("proceed_next %p, %p, %p\n", *_1st, *_2nd, *_3rd);
+    printf("proceed_next %p, %p, %p\n", **_1st, **_2nd, **_3rd);
+    // printf("proceed_next %p, %p, %p\n", **_1st, **_2nd, **_3rd);
+    // printf("data %ld\n", (**_1st)->data);
     *_1st = &(**_1st)->next;
     *_2nd = &(**_1st)->next;
     *_3rd = &(**_2nd)->next;
@@ -551,6 +558,10 @@ extern void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)());
 
 #if 1
 void    ft_list_sort(t_list **begin_list, int (*cmp)()) {
+    // printf("begin: %p\n",begin_list);
+    // t_list *head = *begin_list;
+    // printf("2nd: %p\n", &(head->next));
+
     int list_len = ft_list_size(*begin_list);
     while (list_len-- > 0) {
         // cmp(1, 2);
@@ -579,8 +590,9 @@ void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
 }
 
 int compare_integer(void *a, void *b) {
-    printf("compare a: %p b: %p\n", a, b);
-    return (int)a - (int)b;
+    int ret = a - b;
+    printf("compare a: %p b: %p, a - b = %d\n", (int)a, (int)b, ret);
+    return ret;
 }
 
 void    print_list(t_list *lst) {
