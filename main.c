@@ -644,6 +644,76 @@ void    test_ft_list_sort(void) {
     // undefined behaviors
 }
 
+/* ------------ ft_list_remove_if ---------------- */
+#if 1
+void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *)) {
+    if (!begin_list || !*begin_list)
+        return ;
+    t_list **change = begin_list;
+    while (change) {
+        if (cmp((*change)->data, data_ref) == 0) {
+            t_list *tmp = *change;
+            *change = (*change)->next;
+            free_fct(tmp->data);
+            free(tmp);
+        } else {
+            change = &(*change)->next;
+        }
+    }
+}
+
+#else
+extern void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
+#endif
+
+void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *)) {
+    printf("%stesting ft_list_remove_if%s\n", GRAY, RESET);
+    int before_size = begin_list ? ft_list_size(*begin_list) : 0;
+    int is_null = begin_list == NULL;
+
+    printf("removing!\n");
+    ft_list_remove_if(begin_list, data_ref, cmp, free_fct);
+    if (is_null) {
+        assert(begin_list == NULL);
+        return ;
+    }
+    printf("finished to remove!\n");
+    assert(before_size >= ft_list_size(*begin_list));
+    print_list(*begin_list);
+    if (*begin_list == NULL)
+        return ;
+    for (t_list *tmp = *begin_list; tmp->next; tmp = tmp->next) {
+        assert(cmp(tmp->data, data_ref) != 0);
+    }
+}
+
+void    test_ft_list_remove_if(void) {
+    printf("%s test_ft_list_remove_if() %s\n", PINK, RESET);
+
+    t_ft_list_remove_if(NULL, (void *)1, compare_integer, free);
+
+    t_list *begin_list = NULL;
+    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free);
+
+    ft_list_push_front(&begin_list, (void *)1);
+    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free);
+
+    ft_list_push_front(&begin_list, (void *)2);
+    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free);
+
+    ft_list_push_front(&begin_list, (void *)0);
+    ft_list_push_front(&begin_list, (void *)5);
+    ft_list_push_front(&begin_list, (void *)10);
+    ft_list_push_front(&begin_list, (void *)7);
+    ft_list_push_front(&begin_list, (void *)9);
+    ft_list_push_front(&begin_list, (void *)6);
+    t_ft_list_remove_if(&begin_list, (void *)5, compare_integer, free);
+
+    // error cases
+
+    // undefined behaviors
+}
+
 int main() {
     // test_strlen();
     // test_strcpy();
@@ -655,6 +725,7 @@ int main() {
     // test_ft_create_elem();
     // test_ft_list_push_front();
     // test_ft_list_size();
-    test_ft_list_sort();
+    // test_ft_list_sort();
+    test_ft_list_remove_if();
     return 0;
 }
