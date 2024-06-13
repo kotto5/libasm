@@ -110,17 +110,27 @@ ft_list_sort_one_liner:
     mov r13, rsi  ; r13 = cmp
 
     ; if (!begin_list || !*begin_list)
+    mov rax, r12
+    test rax, rax
+    jz .liner_done
+
     mov rax, [r12]
     test rax, rax
     jz .liner_done
 
     ; t_list **_1st = begin_list;
     mov [rbp-24], r12 ; [rbp-24] = _1st
+    mov r12, [r12]
+    test r12, r12
+    jz .liner_done
     ; t_list **_2nd = &(*_1st)->next;
     mov rbx, [rbp-24]
     mov rbx, [rbx]
     add rbx, 8
     mov [rbp-8], rbx ; [rbp-8] = &(*_1st)->next (rbx + 8 offset for 'next')
+    mov rbx, [rbx]
+    test rbx, rbx
+    jz .liner_done
 
     ; t_list **_3rd = &(*_2nd)->next;
     mov rbx, [rbp-8]
@@ -197,6 +207,9 @@ ft_list_sort:
     mov rbp, rsp
     sub rsp, 0x20
 
+    test rdi, rdi
+    jz .done
+
     ; 引数をレジスタから保存
     mov [rbp-0x8], rdi  ; [rbp-0x8] = begin_list
     mov [rbp-0x10], rsi ; [rbp-0x10] = cmp
@@ -210,9 +223,9 @@ ft_list_sort:
 .loop_start:
     ; while (list_len-- > 0)
     mov rax, [rbp-0x18] ; rax = list_len
+    cmp rax, 0
+    jng .done
     dec rax
-    test rax, rax
-    jz .done
     mov [rbp-0x18], rax ; list_len = rax
 
     ; ft_list_sort_one_liner(begin_list, cmp);
