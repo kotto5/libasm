@@ -556,7 +556,7 @@ void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)()) {
 extern void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)());
 #endif
 
-#if 1
+#if 0
 void    ft_list_sort(t_list **begin_list, int (*cmp)()) {
     // printf("begin: %p\n",begin_list);
     // t_list *head = *begin_list;
