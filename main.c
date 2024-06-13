@@ -674,15 +674,13 @@ void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), v
     printf("%stesting ft_list_remove_if%s\n", GRAY, RESET);
     int is_null = begin_list == NULL;
 
-    printf("removing!\n");
     ft_list_remove_if(begin_list, data_ref, cmp, free_fct);
     if (is_null) {
         assert(begin_list == NULL);
         return ;
     }
-    printf("finished to remove!\n");
     assert(expected_size == ft_list_size(*begin_list));
-    print_list(*begin_list);
+    // print_list(*begin_list);
     if (*begin_list == NULL)
         return ;
     for (t_list *tmp = *begin_list; tmp->next; tmp = tmp->next) {
@@ -718,17 +716,17 @@ void    test_ft_list_remove_if(void) {
 }
 
 int main() {
-    // test_strlen();
-    // test_strcpy();
-    // test_strcmp();
-    // test_wrtie();
-    // test_read();
+    test_strlen();
+    test_strcpy();
+    test_strcmp();
+    test_wrtie();
+    test_read();
     test_strdup();
-    // test_ft_atoi_base();
-    // test_ft_create_elem();
-    // test_ft_list_push_front();
-    // test_ft_list_size();
-    // test_ft_list_sort();
-    // test_ft_list_remove_if();
+    test_ft_atoi_base();
+    test_ft_create_elem();
+    test_ft_list_push_front();
+    test_ft_list_size();
+    test_ft_list_sort();
+    test_ft_list_remove_if();
     return 0;
 }
