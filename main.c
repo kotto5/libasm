@@ -664,9 +664,14 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (
 extern void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 #endif
 
-void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *)) {
+void free_nothing(void *a) {
+    // printf("free_nothing! %ld \n", a);
+    (void)a;
+    return ;
+}
+
+void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *), int expected_size) {
     printf("%stesting ft_list_remove_if%s\n", GRAY, RESET);
-    int before_size = begin_list ? ft_list_size(*begin_list) : 0;
     int is_null = begin_list == NULL;
 
     printf("removing!\n");
@@ -676,7 +681,7 @@ void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), v
         return ;
     }
     printf("finished to remove!\n");
-    assert(before_size >= ft_list_size(*begin_list));
+    assert(expected_size == ft_list_size(*begin_list));
     print_list(*begin_list);
     if (*begin_list == NULL)
         return ;
@@ -685,25 +690,19 @@ void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), v
     }
 }
 
-void free_nothing(void *a) {
-    // printf("free_nothing! %ld \n", a);
-    (void)a;
-    return ;
-}
-
 void    test_ft_list_remove_if(void) {
     printf("%s test_ft_list_remove_if() %s\n", PINK, RESET);
 
-    // t_ft_list_remove_if(NULL, (void *)1, compare_integer, free_nothing);
+    t_ft_list_remove_if(NULL, (void *)1, compare_integer, free_nothing, 0);
 
     t_list *begin_list = NULL;
-    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free_nothing);
+    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free_nothing, 0);
 
     ft_list_push_front(&begin_list, (void *)1);
-    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free_nothing);
+    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free_nothing, 0);
 
     ft_list_push_front(&begin_list, (void *)2);
-    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free_nothing);
+    t_ft_list_remove_if(&begin_list, (void *)1, compare_integer, free_nothing, 1);
 
     ft_list_push_front(&begin_list, (void *)0);
     ft_list_push_front(&begin_list, (void *)5);
@@ -711,7 +710,7 @@ void    test_ft_list_remove_if(void) {
     ft_list_push_front(&begin_list, (void *)7);
     ft_list_push_front(&begin_list, (void *)9);
     ft_list_push_front(&begin_list, (void *)6);
-    t_ft_list_remove_if(&begin_list, (void *)5, compare_integer, free_nothing);
+    t_ft_list_remove_if(&begin_list, (void *)5, compare_integer, free_nothing, 1 + 5);
 
     // error cases
 
