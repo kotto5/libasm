@@ -1,13 +1,6 @@
 extern ft_list_size
-; extern ft_list_sort_one_liner
-extern compare_integer
-extern swap
 
 section .text
-    global ft_list_sort
-    ; global swap
-    global rotate
-    global proceed_next
     global ft_list_sort_one_liner
 
 swap:
@@ -16,30 +9,30 @@ swap:
     ; rsi: b
 
     ; プロローグ
-    push rbp            ; ベースポインタを保存
-    mov rbp, rsp        ; ベースポインタを設定
+   push rbp            ; ベースポインタを保存
+   mov rbp, rsp        ; ベースポインタを設定
 
-    ; void *tmp = *a;
-    mov rax, [rdi]      ; raxに*aの値をロード
+   ; void *tmp = *a;
+   mov rax, [rdi]      ; raxに*aの値をロード
 
-    ; *a = *b;
-    mov rcx, [rsi]      ; rcxに*bの値をロード
-    mov [rdi], rcx      ; *aにrcxの値をストア
+   ; *a = *b;
+   mov rcx, [rsi]      ; rcxに*bの値をロード
+   mov [rdi], rcx      ; *aにrcxの値をストア
 
-    ; *b = tmp;
-    mov [rsi], rax      ; *bにraxの値をストア
+   ; *b = tmp;
+   mov [rsi], rax      ; *bにraxの値をストア
 
-    ; エピローグ
-    pop rbp             ; ベースポインタを復元
-    ret                 ; 関数から戻る
+   ; エピローグ
+   pop rbp             ; ベースポインタを復元
+   ret                 ; 関数から戻る
 
 rotate:
-    ; 引数:
-    ; rdi: a
-    ; rsi: b
-    ; rdx: c
+; 引数:
+; rdi: a
+; rsi: b
+; rdx: c
 
-    ; プロローグ
+; プロローグ
     push rbp            ; ベースポインタを保存
     mov rbp, rsp        ; ベースポインタを設定
 
@@ -110,7 +103,7 @@ ft_list_sort_one_liner:
     push r13
     push r14
     push r15
-    sub rsp, 24
+    sub rsp, 40
 ; call ((void (*)())0x402a57(1, 2)
     ; 引数をレジスタから保存
     mov r12, rdi  ; r12 = begin_list
@@ -122,32 +115,38 @@ ft_list_sort_one_liner:
     jz .liner_done
 
     ; t_list **_1st = begin_list;
-    mov [rbp], r14 ; [rbp] = _1st
+    mov [rbp-24], r12 ; [rbp-24] = _1st
     ; t_list **_2nd = &(*_1st)->next;
-    mov rbx, [rbp]
-    lea [rbp-8], [rbx+8] ; [rbp-8] = &(*_1st)->next (rbx + 8 offset for 'next')
+    mov rbx, [rbp-24]
+    mov rbx, [rbx]
+    add rbx, 8
+    mov [rbp-8], rbx ; [rbp-8] = &(*_1st)->next (rbx + 8 offset for 'next')
 
     ; t_list **_3rd = &(*_2nd)->next;
     mov rbx, [rbp-8]
-    lea [rbp-16], [rbx+8] ; [rbp-16] = &(*_2nd)->next
+    mov rbx, [rbx]
+    add rbx, 8
+    mov [rbp-16], rbx ; [rbp-16] = &(*_2nd)->next
 
 ._liner_loop_start:
     jmp .check_cmp
 
 .check_cmp:
     ; if (cmp((*_1st)->data, (*_2nd)->data) > 0)
-    mov rdi, [rbp]
+    mov rdi, [rbp-24]
+    mov rdi, [rdi]
     mov rdi, [rdi]
     mov rsi, [rbp-8]
     mov rsi, [rsi]
+    mov rsi, [rsi]
     mov rax, r13
     call rax
-    cmp rax, 0
-    jle .no_swap
+    cmp eax, 0
+    jl .no_swap
 
-._swap:
+.swapping:
     ; rotate(_1st, _2nd, _3rd);
-    mov rdi, [rbp]
+    mov rdi, [rbp-24]
     mov rsi, [rbp-8]
     mov rdx, [rbp-16]
     call rotate
@@ -159,19 +158,20 @@ ft_list_sort_one_liner:
 
 .no_swap:
     ; if (*_3rd == NULL) break;
-    mov rax, [rdx]
+    mov rax, [rbp-16]
+    mov rax, [rax]
     test rax, rax
     jz .liner_done
 
     ; proceed_next(&_1st, &_2nd, &_3rd);
-    lea rdi, [r14]
-    lea rsi, [rsp-8]
-    lea rdx, [rsp-16]
+    lea rdi, [rbp-24]
+    lea rsi, [rbp-8]
+    lea rdx, [rbp-16]
     call proceed_next
 
     ; _2ndと_3rdをスタックから取得
-    mov r15, [rsp-8]
-    mov rdx, [rsp-16]
+    mov r15, [rbp-8]
+    mov rdx, [rbp-16]
 
     jmp ._liner_loop_start
 
