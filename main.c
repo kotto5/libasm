@@ -51,7 +51,7 @@ void test_strlen(void) {
 /* ------------ strcpy ---------------- */
 
 void t_strcpy(char *dst, char *src, size_t dst_size) {
-    printf("%stesting dst: [%s], src: [%s], dst_size: %zu%s\n", GRAY, dst, src, dst_size, RESET);
+    // printf("%stesting dst: [%s], src: [%s], dst_size: %zu%s\n", GRAY, dst, src, dst_size, RESET);
 
     char *dst1 = calloc(1, dst_size);
     char *dst2 = calloc(1, dst_size);
@@ -723,12 +723,12 @@ int main() {
     // test_strcmp();
     // test_wrtie();
     // test_read();
-    // test_strdup();
+    test_strdup();
     // test_ft_atoi_base();
     // test_ft_create_elem();
     // test_ft_list_push_front();
     // test_ft_list_size();
     // test_ft_list_sort();
-    test_ft_list_remove_if();
+    // test_ft_list_remove_if();
     return 0;
 }

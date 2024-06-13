@@ -17,7 +17,7 @@ ft_strdup:
     sub rsp, 0x64
 
     call ft_strlen
-    mov [rbp-0x8], rax
+    mov [rbp-0x8], rdi
     mov rdi, rax
     add rdi, 1
     call malloc
