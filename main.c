@@ -582,19 +582,17 @@ extern void ft_list_sort(t_list **begin_list, int (*cmp)());
 /* ------------ ft_list_sort ---------------- */
 
 void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
-    printf("%stesting%s\n", GRAY, RESET);
+    printf("%stesting_t_ft_list_sort %p %s\n", GRAY, begin_list, RESET);
     int before_size = begin_list ? ft_list_size(*begin_list) : 0;
     int is_null = begin_list == NULL;
 
-    printf("sorting!\n");
     ft_list_sort(begin_list, cmp);
     if (is_null) {
         assert(begin_list == NULL);
         return ;
     }
-    printf("finished to sort!\n");
     assert(before_size == ft_list_size(*begin_list));
-    print_list(*begin_list);
+    // print_list(*begin_list);
     if (*begin_list == NULL)
         return ;
     for (t_list *tmp = *begin_list; tmp->next; tmp = tmp->next) {
@@ -604,7 +602,7 @@ void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
 
 int compare_integer(void *a, void *b) {
     int ret = a - b;
-    printf("compare a: %p b: %p, a - b = %d\n", (int)a, (int)b, ret);
+    // printf("compare a: %p b: %p, a - b = %d\n", (int)a, (int)b, ret);
     return ret;
 }
 
