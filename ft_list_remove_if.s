@@ -73,8 +73,11 @@ ft_list_remove_if:
 
 .next:
     ; change = &(*change)->next;
-    mov rdi, [rdi]     ; rdi = *change
-    lea rdi, [rdi]     ; rdi = &(*change)->next
+    mov rdi, [rbp-0x8]     ; rdi = *change
+    mov rdi, [rdi]
+    add rdi, 8
+    ; lea rdi, [rdi + 8]     ; rdi = &(*change)->next
+    mov [rbp-0x8], rdi
     jmp .loop_start
 
 .done:
