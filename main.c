@@ -533,7 +533,7 @@ extern void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd);
 
 #if 0
 void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)()) {
-    if (!begin_list || !*begin_list)
+    if (!begin_list || (*begin_list) == NULL)
         return ;
     t_list **_1st = begin_list;
     t_list **_2nd = &(*_1st)->next;
@@ -562,6 +562,8 @@ void    ft_list_sort(t_list **begin_list, int (*cmp)()) {
     // t_list *head = *begin_list;
     // printf("2nd: %p\n", &(head->next));
 
+    if (begin_list == NULL)
+        return ;
     int list_len = ft_list_size(*begin_list);
     while (list_len-- > 0) {
         // cmp(1, 2);
@@ -579,11 +581,20 @@ extern void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
     printf("%stesting%s\n", GRAY, RESET);
-    int before_size = ft_list_size(*begin_list);
+    int before_size = begin_list ? ft_list_size(*begin_list) : 0;
+    int is_null = begin_list == NULL;
 
+    printf("sorting!\n");
     ft_list_sort(begin_list, cmp);
+    if (is_null) {
+        assert(begin_list == NULL);
+        return ;
+    }
+    printf("finished to sort!\n");
     assert(before_size == ft_list_size(*begin_list));
     print_list(*begin_list);
+    if (*begin_list == NULL)
+        return ;
     for (t_list *tmp = *begin_list; tmp->next; tmp = tmp->next) {
         assert(cmp(tmp->data, tmp->next->data) <= 0);
     }
