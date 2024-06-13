@@ -537,6 +537,8 @@ void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)()) {
         return ;
     t_list **_1st = begin_list;
     t_list **_2nd = &(*_1st)->next;
+    if (*_2nd == NULL)
+        return ;
     t_list **_3rd = &(*_2nd)->next;
     while (1) {
         if (*_3rd)
