@@ -14,22 +14,19 @@ ft_list_remove_if:
     mov rbp, rsp
     sub rsp, 0x64
     push rbx
-    push r12
     push r13
     push r14
 
     ; 引数を保存
-    mov r12, rdi      ; r12 = begin_list
     mov r13, rsi      ; r13 = data_ref
     mov r14, rdx      ; r14 = cmp
     mov rbx, rcx      ; rbx = free_fct
 
     ; if (!begin_list)
-    test r12, r12
+    test rdi, rdi
     jz .done
 
     ; t_list **change = begin_list;
-    ; mov [rbp-0x8], r12
     mov [rbp-0x8], rdi ; [rbp-0x8] = change
 
 .loop_start:
@@ -84,7 +81,6 @@ ft_list_remove_if:
     ; エピローグ
     pop r14
     pop r13
-    pop r12
     pop rbx
     mov rsp, rbp
     pop rbp
