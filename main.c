@@ -623,13 +623,11 @@ void    test_ft_list_sort(void) {
     t_list *begin_list = NULL;
     t_ft_list_sort(&begin_list, compare_integer);
 
-    // t_ft_list_sort(&begin_list, compare_integer);
-
     ft_list_push_front(&begin_list, (void *)1);
-    // t_ft_list_sort(&begin_list, compare_integer);
+    t_ft_list_sort(&begin_list, compare_integer);
 
     ft_list_push_front(&begin_list, (void *)2);
-    // t_ft_list_sort(&begin_list, compare_integer);
+    t_ft_list_sort(&begin_list, compare_integer);
 
     ft_list_push_front(&begin_list, (void *)0);
     ft_list_push_front(&begin_list, (void *)5);
@@ -637,10 +635,7 @@ void    test_ft_list_sort(void) {
     ft_list_push_front(&begin_list, (void *)7);
     ft_list_push_front(&begin_list, (void *)9);
     ft_list_push_front(&begin_list, (void *)6);
-    print_list(begin_list);
     t_ft_list_sort(&begin_list, compare_integer);
-    print_list(begin_list);
-
 
     // error cases
 
