@@ -110,6 +110,7 @@ ft_list_sort_one_liner:
     push r13
     push r14
     push r15
+    sub rsp, 24
 ; call ((void (*)())0x402a57(1, 2)
     ; 引数をレジスタから保存
     mov r12, rdi  ; r12 = begin_list
@@ -121,38 +122,39 @@ ft_list_sort_one_liner:
     jz .liner_done
 
     ; t_list **_1st = begin_list;
-    mov r14, r12  ; r14 = _1st
+    mov [rbp], r14 ; [rbp] = _1st
     ; t_list **_2nd = &(*_1st)->next;
-    mov rbx, [r14]
-    lea r15, [rbx+8] ; r15 = &(*_1st)->next (rbx + 8 offset for 'next')
+    mov rbx, [rbp]
+    lea [rbp-8], [rbx+8] ; [rbp-8] = &(*_1st)->next (rbx + 8 offset for 'next')
 
     ; t_list **_3rd = &(*_2nd)->next;
-    mov rbx, [r15]
-    lea rdx, [rbx+8] ; rdx = &(*_2nd)->next
+    mov rbx, [rbp-8]
+    lea [rbp-16], [rbx+8] ; [rbp-16] = &(*_2nd)->next
 
 ._liner_loop_start:
     jmp .check_cmp
 
 .check_cmp:
     ; if (cmp((*_1st)->data, (*_2nd)->data) > 0)
-    mov rdi, [r14]
+    mov rdi, [rbp]
     mov rdi, [rdi]
-    mov rsi, [r15]
+    mov rsi, [rbp-8]
     mov rsi, [rsi]
     mov rax, r13
-    call compare_integer
+    call rax
     cmp rax, 0
     jle .no_swap
 
+._swap:
     ; rotate(_1st, _2nd, _3rd);
-    mov rdi, r14
-    mov rsi, r15
-    mov rdx, rdx
+    mov rdi, [rbp]
+    mov rsi, [rbp-8]
+    mov rdx, [rbp-16]
     call rotate
 
     ; swap(&_2nd, &_3rd);
-    lea rdi, [rsp-8]
-    lea rsi, [rsp-16]
+    lea rdi, [rbp-8]
+    lea rsi, [rbp-16]
     call swap
 
 .no_swap:
@@ -180,6 +182,7 @@ ft_list_sort_one_liner:
     pop r13
     pop r12
     pop rbx
+    mov rsp, rbp
     pop rbp
     ret
 
