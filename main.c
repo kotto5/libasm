@@ -488,6 +488,82 @@ void    test_ft_list_size(void) {
     // undefined behaviors
 }
 
+// #if 1
+/* test */
+
+#if 1
+void    swap(void **a, void **b) {
+    printf("swapping\n");
+    // printf("swapping %p, %p\n", a, b);
+    void *tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+#else
+extern void    swap(void **a, void **b);
+#endif
+
+#if 0
+void    rotate(void **a, void **b, void **c) {
+    void *tmp = *a;
+    *a = *b;
+    *b = *c;
+    *c = tmp;
+}
+#else
+extern void    rotate(void **a, void **b, void **c);
+#endif
+
+#if 0
+void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd) {
+    *_1st = &(**_1st)->next;
+    *_2nd = &(**_1st)->next;
+    *_3rd = &(**_2nd)->next;
+}
+#else
+extern void    proceed_next(t_list ***_1st, t_list ***_2nd, t_list ***_3rd);
+#endif
+
+#if 0
+void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)()) {
+    if (!begin_list || !*begin_list)
+        return ;
+    t_list **_1st = begin_list;
+    t_list **_2nd = &(*_1st)->next;
+    t_list **_3rd = &(*_2nd)->next;
+    while (1) {
+        if (*_3rd)
+            printf("datas: %p, %p, %p\n", (*_1st)->data, (*_2nd)->data, (*_3rd)->data);
+        else
+            printf("ptrs:  %p, %p, %p\n", (*_1st), (*_2nd), (*_3rd));
+        if (cmp((*_1st)->data, (*_2nd)->data) > 0) {
+            rotate(_1st, _2nd, _3rd);
+            swap(&_2nd, &_3rd);
+        }
+        if (*_3rd == NULL)
+            break;
+        proceed_next(&_1st, &_2nd, &_3rd);
+    }
+}
+#else
+extern void ft_list_sort_one_liner(t_list **begin_list, int (*cmp)());
+#endif
+
+#if 1
+void    ft_list_sort(t_list **begin_list, int (*cmp)()) {
+    int list_len = ft_list_size(*begin_list);
+    while (list_len-- > 0) {
+        // cmp(1, 2);
+        // print_list(begin_list);
+        ft_list_sort_one_liner(begin_list, cmp);
+    }
+}
+#else
+extern void ft_list_sort(t_list **begin_list, int (*cmp)());
+#endif
+
+// #endif
+
 /* ------------ ft_list_sort ---------------- */
 
 void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
@@ -496,26 +572,48 @@ void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
 
     ft_list_sort(begin_list, cmp);
     assert(before_size == ft_list_size(*begin_list));
+    print_list(*begin_list);
     for (t_list *tmp = *begin_list; tmp->next; tmp = tmp->next) {
         assert(cmp(tmp->data, tmp->next->data) <= 0);
     }
 }
 
 int compare_integer(void *a, void *b) {
+    printf("compare a: %p b: %p\n", a, b);
     return (int)a - (int)b;
+}
+
+void    print_list(t_list *lst) {
+    printf("====================\n");
+    while (lst) {
+        printf("value:%d , ptr:%p\n", lst->data, lst);
+        lst = lst->next;
+    }
+    printf("====================\n");
 }
 
 void    test_ft_list_sort(void) {
     printf("%s test_ft_list_sort() %s\n", PINK, RESET);
 
     t_list *begin_list = NULL;
-    t_ft_list_sort(&begin_list, compare_integer);
+    // t_ft_list_sort(&begin_list, compare_integer);
 
     ft_list_push_front(&begin_list, (void *)1);
-    t_ft_list_sort(&begin_list, compare_integer);
+    // t_ft_list_sort(&begin_list, compare_integer);
 
     ft_list_push_front(&begin_list, (void *)2);
+    // t_ft_list_sort(&begin_list, compare_integer);
+
+    ft_list_push_front(&begin_list, (void *)0);
+    ft_list_push_front(&begin_list, (void *)5);
+    ft_list_push_front(&begin_list, (void *)10);
+    ft_list_push_front(&begin_list, (void *)7);
+    ft_list_push_front(&begin_list, (void *)9);
+    ft_list_push_front(&begin_list, (void *)6);
+    print_list(begin_list);
     t_ft_list_sort(&begin_list, compare_integer);
+    print_list(begin_list);
+
 
     // error cases
 
@@ -529,9 +627,10 @@ int main() {
     // test_wrtie();
     // test_read();
     // test_strdup();
-    test_ft_atoi_base();
-    test_ft_create_elem();
-    test_ft_list_push_front();
-    test_ft_list_size();
+    // test_ft_atoi_base();
+    // test_ft_create_elem();
+    // test_ft_list_push_front();
+    // test_ft_list_size();
+    test_ft_list_sort();
     return 0;
 }
