@@ -710,6 +710,13 @@ void    test_ft_list_remove_if(void) {
     ft_list_push_front(&begin_list, (void *)6);
     t_ft_list_remove_if(&begin_list, (void *)5, compare_integer, free_nothing, 1 + 5);
 
+    t_ft_list_remove_if(&begin_list, (void *)0, compare_integer, free_nothing, 1 + 4);
+    t_ft_list_remove_if(&begin_list, (void *)10, compare_integer, free_nothing, 1 + 3);
+    t_ft_list_remove_if(&begin_list, (void *)7, compare_integer, free_nothing, 1 + 2);
+    t_ft_list_remove_if(&begin_list, (void *)9, compare_integer, free_nothing, 1 + 1);
+    t_ft_list_remove_if(&begin_list, (void *)6, compare_integer, free_nothing, 1);
+    t_ft_list_remove_if(&begin_list, (void *)2, compare_integer, free_nothing, 0);
+
     // error cases
 
     // undefined behaviors
