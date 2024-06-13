@@ -12,19 +12,27 @@ global ft_strdup
 ;              (rdi           )
 
 ft_strdup:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 0x64
+
     call ft_strlen
-    push rdi ; save the address of the string
+    mov [rbp-0x8], rax
     mov rdi, rax
     add rdi, 1
     call malloc
     test rax, rax ; check if malloc failed
     jz .error
     mov rdi, rax ; address of the allocated memory
-    pop rsi ; address of the string
+    mov rsi, [rbp-0x8] ; address of the string
     call ft_strcpy
-
-    ret
+    jmp .end
 
 .error:
     mov rax, 0
+    jmp .end
+
+.end
+    mov rsp, rbp
+    pop rbp
     ret
