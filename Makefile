@@ -31,8 +31,11 @@ $(TARGET): $(ASM_OBJS)
 
 test: $(EXECUTABLE)
 
-$(EXECUTABLE): $(TARGET) $(C_OBJS)
-	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
+$(EXECUTABLE): $(C_SRCS) $(TARGET)
+	$(CC) $(CFLAGS) -o $(C_SRCS) -L. -l$(TARGET)
+
+# $(EXECUTABLE): $(TARGET) $(C_OBJS)
+# 	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
 
 %.o: %.$(ASM_EXT)
 	$(NASM) $(NASMFLAGS) $<
