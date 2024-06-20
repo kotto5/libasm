@@ -1,4 +1,5 @@
-TARGET = libasm.a
+TARGET_NAME = asm
+TARGET = lib$(TARGET_NAME).a
 EXECUTABLE = main
 ASM_EXT = s
 
@@ -32,7 +33,7 @@ $(TARGET): $(ASM_OBJS)
 test: $(EXECUTABLE)
 
 $(EXECUTABLE): $(C_SRCS) $(TARGET)
-	$(CC) $(CFLAGS) -o $(C_SRCS) -L. -l$(TARGET)
+	$(CC) $(C_SRCS) -L. -l$(TARGET_NAME)
 
 # $(EXECUTABLE): $(TARGET) $(C_OBJS)
 # 	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
