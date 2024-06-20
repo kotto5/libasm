@@ -609,7 +609,7 @@ int compare_integer(void *a, void *b) {
 void    print_list(t_list *lst) {
     printf("====================\n");
     while (lst) {
-        printf("value:%d , ptr:%p\n", lst->data, lst);
+        printf("value:%p , ptr:%p\n", lst->data, lst);
         lst = lst->next;
     }
     printf("====================\n");
