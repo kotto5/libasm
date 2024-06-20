@@ -5,10 +5,9 @@ ASM_EXT = s
 
 C_SRCS := main.c
 ASM_SRCS := $(wildcard *.$(ASM_EXT))
-SRCS = $(C_SRCS) $(ASM_SRCS)
 
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
-ASM_OBJS := $(patsubst %.$(ASM_EXT), %.o, $(ASM_SRCS))
+ASM_OBJS := $(patsubst %.$(ASM_EXT), objs/%.o, $(ASM_SRCS))
 
 CC = gcc
 CFLAGS = -Wall -g
@@ -38,8 +37,9 @@ $(EXECUTABLE): $(C_SRCS) $(TARGET)
 # $(EXECUTABLE): $(TARGET) $(C_OBJS)
 # 	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
 
-%.o: %.$(ASM_EXT)
-	$(NASM) $(NASMFLAGS) $<
+objs/%.o: %.$(ASM_EXT)
+	mkdir -p $(dir $@)
+	$(NASM) $(NASMFLAGS) $< -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
