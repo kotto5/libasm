@@ -1,6 +1,6 @@
 TARGET_NAME = asm
 TARGET = lib$(TARGET_NAME).a
-EXECUTABLE = main
+EXECUTABLE = a.out
 ASM_EXT = s
 
 C_SRCS := main.c
