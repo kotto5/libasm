@@ -19,7 +19,7 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.s=.o)))
 OBJS_BONUS = $(addprefix $(OBJ_DIR)/, $(notdir $(BONUS_SRCS:.s=.o)))
 
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 NASM = nasm
 NASMFLAGS = -f elf64
@@ -38,13 +38,13 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(ARC) $(ARCFLAGS) $@ $^
 
-bonus: $(TARGET) $(OBJS_BONUS)
-	$(ARC) $(ARCFLAGS) $< $^
+bonus: $(OBJS) $(OBJS_BONUS)
+	$(ARC) $(ARCFLAGS) $(TARGET) $^
 
 test: $(EXECUTABLE)
 
 $(EXECUTABLE): $(C_SRCS) $(TARGET)
-	$(CC) $(C_SRCS) -L. -l$(TARGET_NAME)
+	$(CC) $(CFLAGS) $(C_SRCS) -L. -l$(TARGET_NAME)
 
 # $(EXECUTABLE): $(TARGET) $(C_OBJS)
 # 	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
