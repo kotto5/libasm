@@ -32,7 +32,7 @@ ft_strdup:
     mov rax, 0
     jmp .end
 
-.end
+.end:
     mov rsp, rbp
     pop rbp
     ret
