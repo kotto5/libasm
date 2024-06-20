@@ -23,7 +23,7 @@ ft_read:
 
 set_errno:
     mov rsi, rax
-    call __errno_location
+    call __errno_location wrt ..plt
     neg esi
     mov [rax], esi
     mov rax, -1

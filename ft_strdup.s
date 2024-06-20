@@ -20,7 +20,7 @@ ft_strdup:
     mov [rbp-0x8], rdi
     mov rdi, rax
     add rdi, 1
-    call malloc
+    call malloc wrt ..plt
     test rax, rax ; check if malloc failed
     jz .error
     mov rdi, rax ; address of the allocated memory

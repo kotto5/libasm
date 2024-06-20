@@ -14,7 +14,7 @@ ft_create_elem:
     mov [rbp-0x8], rdi ; data
 
     mov rdi, 16; sizeof(t_list)
-    call malloc
+    call malloc wrt ..plt
     test rax, rax
     jz end
     mov [rbp-0x16], rax ; elem

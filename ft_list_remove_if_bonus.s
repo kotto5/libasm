@@ -67,7 +67,7 @@ ft_list_remove_if:
 
     ; free(tmp);
     mov rdi, [rbp-0x16]   ; rdi = tmp
-    call free
+    call free wrt ..plt
 
     jmp .loop_start
 
