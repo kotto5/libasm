@@ -3,11 +3,20 @@ TARGET = lib$(TARGET_NAME).a
 EXECUTABLE = a.out
 ASM_EXT = s
 
-C_SRCS := main.c
-ASM_SRCS := $(wildcard *.$(ASM_EXT))
+SRC_DIR = src
+OBJ_DIR = obj
+SRC_BONUS_DIR = src_bonus
 
+SRCS = $(wildcard $(SRC_DIR)/*.s)
+BONUS_SRCS = $(wildcard $(SRC_BONUS_DIR)/*.s)
+
+C_SRCS := main.c
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
-ASM_OBJS := $(patsubst %.$(ASM_EXT), objs/%.o, $(ASM_SRCS))
+
+vpath %.s $(SRC_DIR) $(SRC_BONUS_DIR)
+
+OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.s=.o)))
+OBJS_BONUS = $(addprefix $(OBJ_DIR)/, $(notdir $(BONUS_SRCS:.s=.o)))
 
 CC = gcc
 CFLAGS = -Wall -g
@@ -26,8 +35,11 @@ ARCFLAGS = rcs
 
 all: $(TARGET)
 
-$(TARGET): $(ASM_OBJS)
+$(TARGET): $(OBJS)
 	$(ARC) $(ARCFLAGS) $@ $^
+
+bonus: $(TARGET) $(OBJS_BONUS)
+	$(ARC) $(ARCFLAGS) $< $^
 
 test: $(EXECUTABLE)
 
@@ -37,15 +49,15 @@ $(EXECUTABLE): $(C_SRCS) $(TARGET)
 # $(EXECUTABLE): $(TARGET) $(C_OBJS)
 # 	$(LD) -o $@ $(STARTUP) $(C_OBJS) $(LDFLAGS) -L. -l:$(TARGET)
 
-objs/%.o: %.$(ASM_EXT)
-	mkdir -p $(dir $@)
+$(OBJ_DIR)/%.o: %.s
+	@mkdir -p $(dir $@)
 	$(NASM) $(NASMFLAGS) $< -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f $(C_OBJS) $(ASM_OBJS)
+	rm -f $(OBJS) $(OBJS_BONUS) $(C_OBJS)
 
 fclean: clean
 	rm -f $(TARGET) $(EXECUTABLE)
