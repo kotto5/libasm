@@ -14,7 +14,7 @@ global ft_strdup
 ft_strdup:
     push rbp
     mov rbp, rsp
-    sub rsp, 0x64
+    sub rsp, 0x70
 
     call ft_strlen
     mov [rbp-0x8], rdi

@@ -13,7 +13,7 @@ ft_atoi_base:
     push rbp
     mov rbp, rsp
     mov rax, 0
-    sub rsp, 0x64
+    sub rsp, 0x70
 
     mov [rbp-0x8], rdi ; str
     mov [rbp-0x16], rsi ; base

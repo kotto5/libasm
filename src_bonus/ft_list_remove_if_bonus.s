@@ -12,7 +12,7 @@ ft_list_remove_if:
     ; プロローグ
     push rbp
     mov rbp, rsp
-    sub rsp, 0x64
+    sub rsp, 0x70
     push rbx
     push r13
     push r14

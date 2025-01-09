@@ -9,7 +9,7 @@ ft_create_elem:
     push rbp
     mov rbp, rsp
     mov rax, 0
-    sub rsp, 0x64
+    sub rsp, 0x70
 
     mov [rbp-0x8], rdi ; data
 

@@ -10,7 +10,7 @@ ft_list_push_front:
     push rbp
     mov rbp, rsp
     mov rax, 0
-    sub rsp, 0x64
+    sub rsp, 0x70
 
     test rdi, rdi
     jz end
