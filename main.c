@@ -581,7 +581,7 @@ extern void ft_list_sort(t_list **begin_list, int (*cmp)());
 
 /* ------------ ft_list_sort ---------------- */
 
-void    t_ft_list_sort(t_list **begin_list, int (*cmp)()) {
+void    t_ft_list_sort(t_list **begin_list, int (*cmp)(void *, void *)) {
     printf("%stesting_t_ft_list_sort %p %s\n", GRAY, begin_list, RESET);
     int before_size = begin_list ? ft_list_size(*begin_list) : 0;
     int is_null = begin_list == NULL;
@@ -670,7 +670,7 @@ void free_nothing(void *a) {
     return ;
 }
 
-void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *), int expected_size) {
+void    t_ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(void *, void *), void (*free_fct)(void *), int expected_size) {
     printf("%stesting ft_list_remove_if%s\n", GRAY, RESET);
     int is_null = begin_list == NULL;
 
@@ -723,6 +723,8 @@ void    test_ft_list_remove_if(void) {
 }
 
 int main() {
+    printf("%p\n", ft_strlen);
+    printf("%p\n", &ft_strlen);
     test_strlen();
     test_strcpy();
     test_strcmp();
